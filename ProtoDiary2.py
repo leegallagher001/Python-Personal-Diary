@@ -19,7 +19,7 @@ pd2_entries_file = "pd2_entries.json"
 
 # (1) Functions & Initial Global Variables
 
-def newEntry():
+def newEntry(): # Main Menu - Option 1
 
     print("\n")
     title = input("Entry Title: ")
@@ -30,15 +30,15 @@ def newEntry():
     print("\n")
     paragraphs = []
     while True:
-        paragraph = input("Write About Your Day. Type 'END' On A New Line To Finish: "'\n\n') # main article
+        paragraph = input("Write About Your Day. Type 'END' On A New Line To Finish: ""\n") # main article
         print("\n")
         if paragraph == 'END':
             break
         paragraphs.append(paragraph)
 
-    main = "\n".join(paragraphs)
+    main = "\n\n".join(paragraphs)
 
-    # Staged Test
+    # Staged Test (Review Article To Be Saved)
 
     print("\n")
     print("Entry Title: ", title)
@@ -55,16 +55,13 @@ def newEntry():
     if save == "Y":
 
         with open (pd2_entries_file, 'r') as f:
-
             diary_entries = json.load(f)
 
-            diary_entries = []
-
-        diary_entry = {
-              "title": title,
-              "date": date,
-              "main": main
-              }
+            diary_entry = {
+                "title": title,
+                "date": date,
+                "main": main
+            }
 
         diary_entries.append(diary_entry)
 
@@ -74,6 +71,35 @@ def newEntry():
     else:
         print("Okay, maybe next time!")
 
+def accessEntry():  # Main Menu - Option 2
+
+    with open (pd2_entries_file, 'r') as f:
+        diary_entries = json.load(f)
+
+    if not diary_entries:
+        print("No Entries Saved")
+    else:
+        print("Your Diary Entries: ")
+        print("\n")
+        for i, diary_entry in enumerate(diary_entries, start=1):
+            print(f"{i}. {diary_entry['title']}")
+
+    print("\n")
+    entry_selection = input("Enter Name Of Entry To Be Viewed: ")
+    print("\n")
+
+    for diary_entry in diary_entries:
+        if entry_selection == diary_entry["title"]:
+            print("-" * 50)
+            print("ENTRY TITLE: ", diary_entry['title'])
+            print("-" * 50)
+            print("ENTRY DATE: : ", diary_entry['date'])
+            print("-" * 50)
+            print(diary_entry['main'])
+            print("-" * 50)
+            break
+        else:
+            print("Invalid Selection.")
 
 # (2) Opening Statements
 
@@ -101,7 +127,7 @@ while menuChoice != 4:
         print("\n")
         menuChoice = int(input("Would You Like Something Else - Choose Another Option: "))
     elif menuChoice == 2:
-        print("Under Construction")
+        accessEntry()
         print("\n")
         menuChoice = int(input("Would You Like Something Else - Choose Another Option: "))
     elif menuChoice == 3:
