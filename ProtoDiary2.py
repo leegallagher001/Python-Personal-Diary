@@ -25,7 +25,7 @@ def newEntry(): # Main Menu - Option 1
     title = input("Entry Title: ")
     print("\n")
     time = datetime.date.today()
-    date = "Entry Date: " + str(time)
+    date = str(time)
     print(date)
     print("\n")
     paragraphs = []
@@ -57,13 +57,13 @@ def newEntry(): # Main Menu - Option 1
         with open (pd2_entries_file, 'r') as f:
             diary_entries = json.load(f)
 
-            diary_entry = {
-                "title": title,
+            title = {
+                "name": title,
                 "date": date,
                 "main": main
             }
 
-        diary_entries.append(diary_entry)
+        diary_entries.append(title)
 
         with open (pd2_entries_file, 'w') as f:
             json.dump(diary_entries, f, indent=4)
@@ -81,25 +81,48 @@ def accessEntry():  # Main Menu - Option 2
     else:
         print("Your Diary Entries: ")
         print("\n")
-        for i, diary_entry in enumerate(diary_entries, start=1):
-            print(f"{i}. {diary_entry['title']}")
+        for i, title in enumerate(diary_entries, start=1):
+            print(f"{i}. {title["name"]}")
 
-    print("\n")
-    entry_selection = input("Enter Name Of Entry To Be Viewed: ")
-    print("\n")
+        print("\n")
+        entry_selection = input("Enter Name Of Entry To Be Viewed: ")
+        print("\n")
 
-    for diary_entry in diary_entries:
-        if entry_selection == diary_entry["title"]:
-            print("-" * 50)
-            print("ENTRY TITLE: ", diary_entry['title'])
-            print("-" * 50)
-            print("ENTRY DATE: : ", diary_entry['date'])
-            print("-" * 50)
-            print(diary_entry['main'])
-            print("-" * 50)
-            break
-        else:
-            print("Invalid Selection.")
+        for title in diary_entries:
+            if entry_selection == title["name"]:
+                print("-" * 100)
+                print("ENTRY TITLE: ", title["name"])
+                print("-" * 100)
+                print("ENTRY DATE: ", title['date'])
+                print("-" * 100)
+                print(title['main'])
+                print("-" * 100)
+
+def deleteEntry():
+
+    with open (pd2_entries_file, 'r') as f:
+        diary_entries = json.load(f)
+
+    if not diary_entries:
+        print("No Entries Saved")
+    else:
+        print("Your Diary Entries: ")
+        print("\n")
+        for i, title in enumerate(diary_entries, start=1):
+            print(f"{i}. {title["name"]}")
+
+        print("\n")
+        entry_to_delete = input("Enter Name Of Entry To Be Deleted: ")
+        print("\n")
+
+        for index in diary_entries:
+            if entry_to_delete == title:
+                title[index] = title
+                del title[index]
+
+    with open (pd2_entries_file, 'w') as f:
+        json.dump(diary_entries, f)
+           
 
 # (2) Opening Statements
 
@@ -131,7 +154,7 @@ while menuChoice != 4:
         print("\n")
         menuChoice = int(input("Would You Like Something Else - Choose Another Option: "))
     elif menuChoice == 3:
-        print("Under Construction")
+        deleteEntry()
         print("\n")
         menuChoice = int(input("Would You Like Something Else - Choose Another Option: "))
     else:
@@ -143,3 +166,4 @@ print("Thanks for visiting the Proto Diary 2 program!")
 print("\n")
 input("Press 'ENTER' to exit the program.")
 exit()
+
