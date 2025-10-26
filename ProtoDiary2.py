@@ -21,12 +21,14 @@ pd2_entries_file = "pd2_entries.json"
 
 def newEntry(): # Main Menu - Option 1
 
+    diary_entry = {}
+
     print("\n")
-    title = input("Entry Title: ")
+    diary_entry["title"] = input("Entry Title: ")
     print("\n")
     time = datetime.date.today()
-    date = str(time)
-    print(date)
+    diary_entry["date"] = str(time)
+    print(diary_entry["date"])
     print("\n")
     paragraphs = []
     while True:
@@ -36,16 +38,16 @@ def newEntry(): # Main Menu - Option 1
             break
         paragraphs.append(paragraph)
 
-    main = "\n\n".join(paragraphs)
+    diary_entry["main"] = "\n\n".join(paragraphs)
 
     # Staged Test (Review Article To Be Saved)
 
     print("\n")
-    print("Entry Title: ", title)
+    print("Entry Title: ", diary_entry["title"])
     print("\n")
-    print("Entry Date: ", date)
+    print("Entry Date: ", diary_entry["date"])
     print("\n")
-    print(main)
+    print(diary_entry["main"])
 
     # JSON Save
 
@@ -57,13 +59,7 @@ def newEntry(): # Main Menu - Option 1
         with open (pd2_entries_file, 'r') as f:
             diary_entries = json.load(f)
 
-            title = {
-                "name": title,
-                "date": date,
-                "main": main
-            }
-
-        diary_entries.append(title)
+        diary_entries.append(diary_entry)
 
         with open (pd2_entries_file, 'w') as f:
             json.dump(diary_entries, f, indent=4)
@@ -81,24 +77,26 @@ def accessEntry():  # Main Menu - Option 2
     else:
         print("Your Diary Entries: ")
         print("\n")
-        for i, title in enumerate(diary_entries, start=1):
-            print(f"{i}. {title["name"]}")
+        for i, diary_entry in enumerate(diary_entries, start=1):
+            print(f"{i}. {diary_entry['title']}")
 
         print("\n")
         entry_selection = input("Enter Name Of Entry To Be Viewed: ")
         print("\n")
 
-        for title in diary_entries:
-            if entry_selection == title["name"]:
+        for diary_entry in diary_entries:
+            if entry_selection == diary_entry["title"]:
                 print("-" * 100)
-                print("ENTRY TITLE: ", title["name"])
+                print("ENTRY TITLE: ", diary_entry['title'])
                 print("-" * 100)
-                print("ENTRY DATE: ", title['date'])
+                print("ENTRY DATE: ", diary_entry['date'])
                 print("-" * 100)
-                print(title['main'])
+                print(diary_entry['main'])
                 print("-" * 100)
 
-def deleteEntry():
+def deleteEntry(): # once again, making this work taught me a lot
+
+    new_data = []
 
     with open (pd2_entries_file, 'r') as f:
         diary_entries = json.load(f)
@@ -108,21 +106,23 @@ def deleteEntry():
     else:
         print("Your Diary Entries: ")
         print("\n")
-        for i, title in enumerate(diary_entries, start=1):
-            print(f"{i}. {title["name"]}")
-
+        for i, diary_entry in enumerate(diary_entries, start=1):
+            print(f"{i}. {diary_entry["title"]}")
         print("\n")
-        entry_to_delete = input("Enter Name Of Entry To Be Deleted: ")
+        delete_selection = input("Enter Name Of Entry To Be Deleted: ") # prompts user to enter title of entry to be deleted
         print("\n")
 
-        for index in diary_entries:
-            if entry_to_delete == title:
-                title[index] = title
-                del title[index]
+        for diary_entry in diary_entries:
+            if diary_entry["title"] == delete_selection: # if an entry is found matching the title of entry the user wishes to delete
+                pass # allows the for loop to continue without doing anything
+            else:
+                new_data.append(diary_entry) # adds the diary entries that we want to keep back onto the JSON file
 
     with open (pd2_entries_file, 'w') as f:
-        json.dump(diary_entries, f)
-           
+        json.dump(new_data, f, indent=4)
+
+    print("\n")
+    print(delete_selection, "deleted successfully!")
 
 # (2) Opening Statements
 
@@ -166,4 +166,5 @@ print("Thanks for visiting the Proto Diary 2 program!")
 print("\n")
 input("Press 'ENTER' to exit the program.")
 exit()
+
 
