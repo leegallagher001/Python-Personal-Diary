@@ -12,35 +12,31 @@ from tkinter import *
 
 window = tk.Tk()
 window.geometry("900x600")
-window.configure(bg="#352f36")
+window.configure(bg="lightgreen")
 window.title("Python Diary Application GUI Prototype V1")
 
-# (2) Title Frame & Label
+# (2) Grid Configuration
 
-label_frame = tk.Frame(window, bg="lightgreen")
-label_frame.pack(fill='both', expand=True)
+pg1rows = 6
+pg1columns = 2
 
-label = tk.Label(label_frame, text="Python Diary Application", font=("Arial", 24), relief="solid", borderwidth=2, bg="black", fg="lightgreen", padx=100, pady=10)
-label.pack(fill='both', expand=True, padx=5, pady=5)
+for i in range(pg1rows):
+    window.grid_rowconfigure(i, weight=1)
+for i in range(pg1columns):
+    window.grid_columnconfigure(i, weight=1)
 
-# (3) Main Menu & Buttons
+# (3) Main Menu
 
-main_menu_frame = tk.Frame(window, bg="lightgreen")
-main_menu_frame.pack(fill='both', expand=True, pady=5)
+title_label = tk.Label(window, text="-- PYTHON TEXT DIARY --", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_text = tk.Button(main_menu_frame, text="Text Diary ", font=("Arial", 16), width=70, height="2", bg="#084B13", fg="lightgreen", relief="raised", borderwidth=2)
-button_text.pack(fill='both', expand=True, padx=5, pady=5)
+button_new = tk.Button(window, text="Add New Entry", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=0, row=1, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_images = tk.Button(main_menu_frame, text="Image Diary", font=("Arial", 16), width=70, height="2", bg="#084B13", fg="lightgreen", relief="raised", borderwidth=2)
-button_images.pack(fill='both', expand=True, padx=5, pady=5)
+button_view = tk.Button(window, text="View Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=1, row=1, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_audio = tk.Button(main_menu_frame, text="Audio Diary", font=("Arial", 16), width=70, height="2", bg="#084B13", fg="lightgreen", relief="raised", borderwidth=2)
-button_audio.pack(fill='both', expand=True, padx=5, pady=5)
+button_delete = tk.Button(window, text="Delete Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=0, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_video = tk.Button(main_menu_frame, text="Video Diary", font=("Arial", 16), width=70, height="2", bg="#084B13", fg="lightgreen", relief="raised", borderwidth=2)
-button_video.pack(fill='both', expand=True, padx=5, pady=5)
+button_help = tk.Button(window, text="Help & Readme Text", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=1, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_readme = tk.Button(main_menu_frame, text="Readme/Help", font=("Arial", 16), width=70, height="2", bg="#084B13", fg="lightgreen", relief="raised", borderwidth=2)
-button_readme.pack(fill='both', expand=True, padx=5, pady=5)
+footer_label = tk.Label(window, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=5, columnspan=2, sticky=NSEW, padx=5, pady=5)
 
 window.mainloop()
