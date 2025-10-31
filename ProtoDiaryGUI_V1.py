@@ -5,6 +5,7 @@
 
 # (0) Imports
 
+from ast import Lambda
 import tkinter as tk
 from tkinter import *
 
@@ -34,6 +35,30 @@ def home_button_from_new(): # calls "home page" from "new entry page"
     new_entry_page.pack_forget()
     home_page.pack(fill='both', expand=True)
     home_page.tkraise()
+
+def text_entry_to_txt():
+    title = enter_title_textbox.get("1.0",'end-1c')
+    date = enter_date_textbox.get("1.0",'end-1c')
+    main = enter_article_textbox.get("1.0",'end-1c')
+
+    with open(f"{title}.txt", "w") as f:
+        f.write("-" * 50)
+        f.write("\n")
+        f.write(title)
+        f.write("\n")
+        f.write("-" * 50)
+        f.write("\n")
+        f.write(date)
+        f.write("\n")
+        f.write("-" * 50)
+        f.write("\n")
+        f.write(main)
+        f.write("\n")
+
+    enter_title_textbox.delete("1.0", "end")
+    enter_date_textbox.delete("1.0", "end")
+    enter_article_textbox.delete("1.0", "end")
+
 
 # ---------- HOME PAGE ---------- #
 
@@ -83,15 +108,23 @@ entry_date_label = tk.Label(new_entry_page, text="Entry Date: ", bg="green", fg=
 
 entry_article_label = tk.Label(new_entry_page, text="Entry Article: ", bg="green", fg="black", font=("Arial", 14)).grid(column=0, row=3, columnspan=2, rowspan=5, sticky=NSEW, padx=5, pady=5)
 
-enter_title_textbox = tk.Entry(new_entry_page, fg="green", bg="black", font=("Arial", 14)).grid(column=2, row=1, columnspan=8, sticky=NSEW, padx=5, pady=5)
+# with the elements subject to the ".get()" method, grid needs to be declared seperately
+# as otherwise the widget is assigned a class of "None" and is inaccessible via ".get()" method
 
-enter_date_textbox = tk.Entry(new_entry_page, fg="green", bg="black", font=("Arial", 14)).grid(column=2, row=2, columnspan=8, sticky=NSEW, padx=5, pady=5)
+enter_title_textbox = tk.Text(new_entry_page, fg="green", bg="black", font=("Arial", 14), width=45, height=1)
+enter_title_textbox.grid(column=2, row=1, columnspan=8, sticky=NSEW, padx=5, pady=5)                          
 
-enter_article_textbox = tk.Entry(new_entry_page, fg="green", bg="black", font=("Arial", 14)).grid(column=2, row=3, columnspan=8, rowspan=5, sticky=NSEW, padx=5, pady=5)
+enter_date_textbox = tk.Text(new_entry_page, fg="green", bg="black", font=("Arial", 14), width=45, height=1)
+enter_date_textbox.grid(column=2, row=2, columnspan=8, sticky=NSEW, padx=5, pady=5)
 
-home_button = tk.Button(new_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_new).grid(column=0, row=8, columnspan=10, sticky=NSEW, padx=5, pady=5)
+enter_article_textbox = tk.Text(new_entry_page, fg="green", bg="black", font=("Arial", 14),width=45, height=10)
+enter_article_textbox.grid(column=2, row=3, columnspan=8, rowspan=5, sticky=NSEW, padx=5, pady=5)
+
+home_button = tk.Button(new_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_new).grid(column=0, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+submit_button = tk.Button(new_entry_page, text="SUBMIT", bg="black", fg="yellow", font=("Arial", 16), command=text_entry_to_txt)
+submit_button.grid(column=5, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
 
 footer_label = tk.Label(new_entry_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
 window.mainloop()
-
