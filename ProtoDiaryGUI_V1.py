@@ -47,9 +47,7 @@ def access_current_entries_page(): # calls "read saved entries page" from home
 
 def delete_current_entry_page(): # calls "delete entry page" from home
     home_page.pack_forget()
-    delete_entry_page.pack(fill='both', expand=True)
-    delete_entry_page.tkraise()
-    display_saved_entries_delete()
+    generateDeletePage()
 
 # -- NEW ENTRY PAGE -- #
 
@@ -123,18 +121,10 @@ def home_button_from_read(): # calls "home page" from "reading entry" page
 
 # -- DELETE ENTRY PAGE -- #
 
-def home_button_from_delete(): # calls "home page" from "reading entry" page
-    delete_entry_page.pack_forget()
-    home_page.pack(fill='both', expand=True)
-    home_page.tkraise()
-
-def display_saved_entries_delete(): # displays buttons that allow user to select an entry by title
-    with open (diary_entries_file, 'r') as f: # opens the JSON file and program reads it
-        diary_entries = json.load(f)
-
-    for i, diary_entry in enumerate(diary_entries, start=1): # generates a label for each diary entry on the delete page
-        entry_label = tk.Label(entries_container_delete, bg="black", fg="lightgreen", font=("Arial", 14), text=f"{i}. {diary_entry['title']}")
-        entry_label.grid(row=i-1, columnspan=1, column=0, sticky=NSEW, padx=5, pady=5)
+# The delete entry functions are nested within the "generateDeletePage()" function, so that the page refreshes when the user leaves it
+# as beforehand the page wouldn't refresh properly if the user had visited it previously. The function effectively generates a new "delete
+# page" each time the user visits it, allowing the page to "refresh" and for any deleted entries to be gone, as the function that displays the
+# labels for the JSON entries is called again
 
 # (3.0) Page Layouts
 
@@ -232,7 +222,7 @@ for i in range(containerRows):
 for i in range(containerColumns):
     entries_container.grid_columnconfigure(i, weight=1)
 
-entry_title_entry = tk.Entry(view_saved_entries_page, fg="lightgreen", bg="black", font=("Arial", 14))
+entry_title_entry = tk.Entry(view_saved_entries_page, fg="lightgreen", bg="black", font=("Arial", 14), justify="center")
 entry_title_entry.grid(column=5, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
 
 entry_title_entry_instruction = tk.Label(view_saved_entries_page, fg="lightgreen", bg="black", font=("Arial", 14), text="Enter Title To View")
@@ -287,44 +277,88 @@ footer_label = tk.Label(read_saved_entry_page, text="Created by Lee Gallagher 20
 
 # ---------- Page 5 - DELETE ENTRY PAGE ---------- #
 
-pg5rows = 10
-pg5columns = 10
+def generateDeletePage():
 
-# (1) Grid Configuration
+    delete_entry_page = tk.Frame(window, bg="lightgreen") # Page 5
 
-for i in range(pg5rows):
-    delete_entry_page.grid_rowconfigure(i, weight=1)
-for i in range(pg5columns):
-    delete_entry_page.grid_columnconfigure(i, weight=1)
+    # -- NESTED FUNCTIONS FOR DELETE PAGE -- #
 
-# (2) Page Contents
+    def home_button_from_delete(): # calls "home page" from "reading entry" page
+        delete_entry_page.pack_forget()
+        home_page.pack(fill='both', expand=True)
+        home_page.tkraise()
 
-title_label = tk.Label(delete_entry_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+    def display_saved_entries_delete(): # displays buttons that allow user to select an entry by title
+        with open (diary_entries_file, 'r') as f: # opens the JSON file and program reads it
+            diary_entries = json.load(f)
 
-entries_container_delete = tk.Frame(delete_entry_page, bg="green") # container that stores the buttons for the different saved entries
-entries_container_delete.grid(column=0, row=1, columnspan=10, rowspan=6, sticky=NSEW, padx=5, pady=5) # configured as it's own grid
+        for i, diary_entry in enumerate(diary_entries, start=1): # generates a label for each diary entry on the delete page
+            entry_label = tk.Label(entries_container_delete, bg="black", fg="lightgreen", font=("Arial", 14), text=f"{i}. {diary_entry['title']}")
+            entry_label.grid(row=i-1, columnspan=1, column=0, sticky=NSEW, padx=5, pady=5)
 
-deleteContainerRows = 10
-deleteContainerColumns = 1
+    def delete_saved_entry():
 
-for i in range(deleteContainerRows):
-    entries_container_delete.grid_rowconfigure(i, weight=1)
-for i in range(deleteContainerColumns):
-    entries_container_delete.grid_columnconfigure(i, weight=1)
+        new_data = []
 
-entry_title_entry = tk.Entry(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14))
-entry_title_entry.grid(column=5, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+        with open (diary_entries_file, 'r') as f:
+            diary_entries = json.load(f)
 
-entry_title_entry_instruction = tk.Label(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14), text="Enter Title To Delete")
-entry_title_entry_instruction.grid(column=0, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+            delete_selection = delete_title_entry.get()
 
-home_button = tk.Button(delete_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_delete).grid(column=0, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+            for diary_entry in diary_entries:
+                if diary_entry['title'] == delete_selection: # if an entry is found matching the title of entry the user wishes to delete
+                    pass # allows the for loop to continue without doing anything
+                else:
+                    new_data.append(diary_entry) # adds the diary entries that we want to keep back onto the JSON file
 
-submit_button = tk.Button(delete_entry_page, fg="yellow", bg="black", font=("Arial", 14), text="SUBMIT", command=read_article)
-submit_button.grid(column=5, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+        with open (diary_entries_file, 'w') as f:
+            json.dump(new_data, f, indent=4)
 
-footer_label = tk.Label(delete_entry_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
+        delete_title_entry_instruction.config(text="Entry Deleted Successfully!", bg="red", fg="black")
+
     
+
+    # (1) Grid Configuration
+
+    pg5rows = 10
+    pg5columns = 10
+
+    for i in range(pg5rows):
+        delete_entry_page.grid_rowconfigure(i, weight=1)
+    for i in range(pg5columns):
+        delete_entry_page.grid_columnconfigure(i, weight=1)
+
+    # (2) Page Contents
+
+    title_label = tk.Label(delete_entry_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+
+    entries_container_delete = tk.Frame(delete_entry_page, bg="green") # container that stores the buttons for the different saved entries
+    entries_container_delete.grid(column=0, row=1, columnspan=10, rowspan=6, sticky=NSEW, padx=5, pady=5) # configured as it's own grid
+
+    deleteContainerRows = 10
+    deleteContainerColumns = 1
+
+    for i in range(deleteContainerRows):
+        entries_container_delete.grid_rowconfigure(i, weight=1)
+    for i in range(deleteContainerColumns):
+        entries_container_delete.grid_columnconfigure(i, weight=1)
+
+    delete_title_entry = tk.Entry(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14), justify="center")
+    delete_title_entry.grid(column=5, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+    delete_title_entry_instruction = tk.Label(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14), text="Enter Title To Delete")
+    delete_title_entry_instruction.grid(column=0, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+    home_button = tk.Button(delete_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_delete).grid(column=0, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+    submit_button = tk.Button(delete_entry_page, fg="yellow", bg="black", font=("Arial", 14), text="SUBMIT", command=delete_saved_entry)
+    submit_button.grid(column=5, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+    footer_label = tk.Label(delete_entry_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
+
+    delete_entry_page.pack(fill='both', expand=True)
+    delete_entry_page.tkraise()
+    display_saved_entries_delete()
 
 # (4.0) Mainloop
 
