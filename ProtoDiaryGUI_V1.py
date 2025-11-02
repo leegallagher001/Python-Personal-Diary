@@ -20,6 +20,7 @@ home_page = tk.Frame(window, bg="lightgreen") # Page 1
 new_entry_page = tk.Frame(window, bg="lightgreen") # Page 2
 view_saved_entries_page = tk.Frame(window, bg="lightgreen") # Page 3
 read_saved_entry_page = tk.Frame(window, bg="lightgreen") # Page 4
+delete_entry_page = tk.Frame(window, bg="lightgreen") # Page 5
 
 home_page.tkraise() # loads home page when program is opened
 
@@ -44,6 +45,12 @@ def access_current_entries_page(): # calls "read saved entries page" from home
     view_saved_entries_page.tkraise()
     display_saved_entries()
 
+def delete_current_entry_page(): # calls "delete entry page" from home
+    home_page.pack_forget()
+    delete_entry_page.pack(fill='both', expand=True)
+    delete_entry_page.tkraise()
+    display_saved_entries_delete()
+
 # -- NEW ENTRY PAGE -- #
 
 def home_button_from_new(): # calls "home page" from "new entry page"
@@ -60,6 +67,7 @@ def text_entry_to_file(): # saves the entered text to a JSON file, then deletes 
     diary_entry["main"] = enter_article_textbox.get("1.0",'end-1c')
 
     with open (diary_entries_file, 'r') as f:
+        global diary_entries
         diary_entries = json.load(f)
 
     diary_entries.append(diary_entry)
@@ -88,8 +96,10 @@ def display_saved_entries(): # displays buttons that allow user to select an ent
     with open (diary_entries_file, 'r') as f: # opens the JSON file and program reads it
         diary_entries = json.load(f)
 
-    for i, diary_entry in enumerate(diary_entries, start=1): # generates a button for each diary entry
-        tk.Button(entries_container, bg="black", fg="lightgreen", font=("Arial", 14), text=f"{i}. {diary_entry['title']} - {diary_entry['date']}", command=read_article).grid(row=i-1, columnspan=1, column=0, sticky=NSEW, padx=5, pady=5)
+    for i, diary_entry in enumerate(diary_entries, start=1): # generates a label for each diary entry on the view page
+        global entry_button
+        entry_button = tk.Label(entries_container, bg="black", fg="lightgreen", font=("Arial", 14), text=f"{i}. {diary_entry['title']}")
+        entry_button.grid(row=i-1, columnspan=1, column=0, sticky=NSEW, padx=5, pady=5)
 
 # -- READ SAVED ENTRY PAGE -- #
 
@@ -97,16 +107,34 @@ def load_article():
     with open (diary_entries_file, 'r') as f:
         diary_entries = json.load(f)
 
-    for diary_entry in diary_entries:
-        if tk.Button(text = f"{i}. {diary_entry['title']}") == diary_entry['title']:
-            entry_title.config(text = diary_entry['title'])
-            entry_date.config(text = diary_entry['date'])
-            entry_main.config(text = diary_entry['main'])
+        entry_button_title = entry_title_entry.get()
+
+        for diary_entry in diary_entries:
+            if entry_button_title == diary_entry['title']:
+                entry_title.config(text = diary_entry['title'])
+                entry_date.config(text = diary_entry['date'])
+                entry_main.delete("1.0", "end")
+                entry_main.insert("1.0", diary_entry['main'])
 
 def home_button_from_read(): # calls "home page" from "reading entry" page
     read_saved_entry_page.pack_forget()
     home_page.pack(fill='both', expand=True)
     home_page.tkraise()
+
+# -- DELETE ENTRY PAGE -- #
+
+def home_button_from_delete(): # calls "home page" from "reading entry" page
+    delete_entry_page.pack_forget()
+    home_page.pack(fill='both', expand=True)
+    home_page.tkraise()
+
+def display_saved_entries_delete(): # displays buttons that allow user to select an entry by title
+    with open (diary_entries_file, 'r') as f: # opens the JSON file and program reads it
+        diary_entries = json.load(f)
+
+    for i, diary_entry in enumerate(diary_entries, start=1): # generates a label for each diary entry on the delete page
+        entry_label = tk.Label(entries_container_delete, bg="black", fg="lightgreen", font=("Arial", 14), text=f"{i}. {diary_entry['title']}")
+        entry_label.grid(row=i-1, columnspan=1, column=0, sticky=NSEW, padx=5, pady=5)
 
 # (3.0) Page Layouts
 
@@ -124,13 +152,13 @@ for i in range(pg1columns):
 
 # (2) Page Contents (Main Menu)
 
-title_label = tk.Label(home_page, text="[ PYTHON TEXT DIARY ]", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=2, sticky=NSEW, padx=5, pady=5)
+title_label = tk.Label(home_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=2, sticky=NSEW, padx=5, pady=5)
 
 button_new = tk.Button(home_page, text="Add New Entry", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20), command=add_new_entry_page).grid(column=0, row=1, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
 button_view = tk.Button(home_page, text="View Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20), command=access_current_entries_page).grid(column=1, row=1, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_delete = tk.Button(home_page, text="Delete Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=0, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
+button_delete = tk.Button(home_page, text="Delete Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20), command=delete_current_entry_page).grid(column=0, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
 button_help = tk.Button(home_page, text="Help & Readme Text", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=1, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
@@ -150,7 +178,7 @@ for i in range(pg2columns):
 
 # (2) Page Contents
 
-title_label = tk.Label(new_entry_page, text="[ PYTHON TEXT DIARY ]", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+title_label = tk.Label(new_entry_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
 entry_title_label = tk.Label(new_entry_page, text="Entry Title: ", bg="green", fg="black", font=("Arial", 14)).grid(column=0, row=1, columnspan=2, sticky=NSEW, padx=5, pady=5)
 
@@ -191,10 +219,10 @@ for i in range(pg3columns):
 
 # (2) Page Contents
 
-title_label = tk.Label(view_saved_entries_page, text="-- PYTHON TEXT DIARY --", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+title_label = tk.Label(view_saved_entries_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
 entries_container = tk.Frame(view_saved_entries_page, bg="green") # container that stores the buttons for the different saved entries
-entries_container.grid(column=0, row=1, columnspan=10, rowspan=7, sticky=NSEW, padx=5, pady=5) # configured as it's own grid
+entries_container.grid(column=0, row=1, columnspan=10, rowspan=6, sticky=NSEW, padx=5, pady=5) # configured as it's own grid
 
 containerRows = 10
 containerColumns = 1
@@ -204,7 +232,16 @@ for i in range(containerRows):
 for i in range(containerColumns):
     entries_container.grid_columnconfigure(i, weight=1)
 
-home_button = tk.Button(view_saved_entries_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_saved).grid(column=0, row=8, columnspan=10, sticky=NSEW, padx=5, pady=5)
+entry_title_entry = tk.Entry(view_saved_entries_page, fg="lightgreen", bg="black", font=("Arial", 14))
+entry_title_entry.grid(column=5, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+entry_title_entry_instruction = tk.Label(view_saved_entries_page, fg="lightgreen", bg="black", font=("Arial", 14), text="Enter Title To View")
+entry_title_entry_instruction.grid(column=0, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+home_button = tk.Button(view_saved_entries_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_saved).grid(column=0, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+submit_button = tk.Button(view_saved_entries_page, fg="yellow", bg="black", font=("Arial", 14), text="SUBMIT", command=read_article)
+submit_button.grid(column=5, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
 
 footer_label = tk.Label(view_saved_entries_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
@@ -222,7 +259,7 @@ for i in range(pg4columns):
 
 # (2) Page Contents
 
-title_label = tk.Label(read_saved_entry_page, text="-- PYTHON TEXT DIARY --", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+title_label = tk.Label(read_saved_entry_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
 diary_entry_container = tk.Frame(read_saved_entry_page, bg="black") # where the diary article is read from
 diary_entry_container.grid(column=0, row=1, columnspan=10, rowspan=7, sticky=NSEW, padx=5, pady=5)
@@ -241,15 +278,54 @@ entry_title.grid(column=0, row=0, columnspan=1, sticky=NSEW, padx=5, pady=5)
 entry_date = tk.Label(diary_entry_container, fg="lightgreen", bg="black", font=("Arial", 14))
 entry_date.grid(column=0, row=1, columnspan=1, sticky=NSEW, padx=5, pady=5)
 
-entry_main = tk.Label(diary_entry_container, fg="lightgreen", bg="black", font=("Arial", 14))
+entry_main = tk.Text(diary_entry_container, fg="lightgreen", bg="black", font=("Arial", 14), width=45, height=10)
 entry_main.grid(column=0, row=2, columnspan=1, rowspan=8, sticky=NSEW, padx=5, pady=5)
 
 home_button = tk.Button(read_saved_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_read).grid(column=0, row=8, columnspan=10, sticky=NSEW, padx=5, pady=5)
 
 footer_label = tk.Label(read_saved_entry_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
+
+# ---------- Page 5 - DELETE ENTRY PAGE ---------- #
+
+pg5rows = 10
+pg5columns = 10
+
+# (1) Grid Configuration
+
+for i in range(pg5rows):
+    delete_entry_page.grid_rowconfigure(i, weight=1)
+for i in range(pg5columns):
+    delete_entry_page.grid_columnconfigure(i, weight=1)
+
+# (2) Page Contents
+
+title_label = tk.Label(delete_entry_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=10, sticky=NSEW, padx=5, pady=5)
+
+entries_container_delete = tk.Frame(delete_entry_page, bg="green") # container that stores the buttons for the different saved entries
+entries_container_delete.grid(column=0, row=1, columnspan=10, rowspan=6, sticky=NSEW, padx=5, pady=5) # configured as it's own grid
+
+deleteContainerRows = 10
+deleteContainerColumns = 1
+
+for i in range(deleteContainerRows):
+    entries_container_delete.grid_rowconfigure(i, weight=1)
+for i in range(deleteContainerColumns):
+    entries_container_delete.grid_columnconfigure(i, weight=1)
+
+entry_title_entry = tk.Entry(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14))
+entry_title_entry.grid(column=5, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+entry_title_entry_instruction = tk.Label(delete_entry_page, fg="lightgreen", bg="black", font=("Arial", 14), text="Enter Title To Delete")
+entry_title_entry_instruction.grid(column=0, row=7, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+home_button = tk.Button(delete_entry_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_delete).grid(column=0, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+submit_button = tk.Button(delete_entry_page, fg="yellow", bg="black", font=("Arial", 14), text="SUBMIT", command=read_article)
+submit_button.grid(column=5, row=8, columnspan=5, sticky=NSEW, padx=5, pady=5)
+
+footer_label = tk.Label(delete_entry_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=10, sticky=NSEW, padx=5, pady=5)
     
+
 # (4.0) Mainloop
 
 window.mainloop()
-
-
