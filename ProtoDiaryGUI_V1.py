@@ -21,6 +21,7 @@ new_entry_page = tk.Frame(window, bg="lightgreen") # Page 2
 view_saved_entries_page = tk.Frame(window, bg="lightgreen") # Page 3
 read_saved_entry_page = tk.Frame(window, bg="lightgreen") # Page 4
 delete_entry_page = tk.Frame(window, bg="lightgreen") # Page 5
+help_readme_page = tk.Frame(window, bg="lightgreen") # Page 6
 
 home_page.tkraise() # loads home page when program is opened
 
@@ -48,6 +49,11 @@ def access_current_entries_page(): # calls "read saved entries page" from home
 def delete_current_entry_page(): # calls "delete entry page" from home
     home_page.pack_forget()
     generateDeletePage()
+
+def help_page():
+    home_page.pack_forget()
+    help_readme_page.pack(fill='both', expand=True)
+    help_readme_page.tkraise()
 
 # -- NEW ENTRY PAGE -- #
 
@@ -126,6 +132,13 @@ def home_button_from_read(): # calls "home page" from "reading entry" page
 # page" each time the user visits it, allowing the page to "refresh" and for any deleted entries to be gone, as the function that displays the
 # labels for the JSON entries is called again
 
+# -- HELP & README PAGE -- #
+
+def home_button_from_help(): # calls "home page" from "help & readme" page
+    help_readme_page.pack_forget()
+    home_page.pack(fill='both', expand=True)
+    home_page.tkraise()
+
 # (3.0) Page Layouts
 
 # ---------- Page 1 - HOME PAGE ---------- #
@@ -150,7 +163,7 @@ button_view = tk.Button(home_page, text="View Saved Entries", borderwidth=2, rel
 
 button_delete = tk.Button(home_page, text="Delete Saved Entries", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20), command=delete_current_entry_page).grid(column=0, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
-button_help = tk.Button(home_page, text="Help & Readme Text", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20)).grid(column=1, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
+button_help = tk.Button(home_page, text="Help & Readme Text", borderwidth=2, relief="raised", fg="lightgreen", bg="black", font=("Arial", 20), command=help_page).grid(column=1, row=3, rowspan=2, sticky=NSEW, padx=5, pady=5)
 
 footer_label = tk.Label(home_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=5, columnspan=2, sticky=NSEW, padx=5, pady=5)
 
@@ -316,7 +329,7 @@ def generateDeletePage():
 
         delete_title_entry_instruction.config(text="Entry Deleted Successfully!", bg="red", fg="black")
 
-    
+        # -- END OF FUNCTIONS -- #
 
     # (1) Grid Configuration
 
@@ -359,6 +372,29 @@ def generateDeletePage():
     delete_entry_page.pack(fill='both', expand=True)
     delete_entry_page.tkraise()
     display_saved_entries_delete()
+
+# ---------- PAGE 6 - HELP & README PAGE ---------- #
+
+pg6rows = 10
+pg6columns = 1
+
+for i in range(pg6rows):
+    help_readme_page.grid_rowconfigure(i, weight=1)
+for i in range(pg6columns):
+    help_readme_page.grid_columnconfigure(i, weight=1)
+
+title_label = tk.Label(help_readme_page, text="PYTHON TEXT DIARY", bg="green", fg="black", font=("Arial", 24)).grid(column=0, row=0, columnspan=1, sticky=NSEW, padx=5, pady=5)
+
+help_text = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nNew Entry\n\nOption 1 - The 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen. Simply type the entry title you wish to view into the entry box and hit 'Submit'. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply type in the name of the entry to delete, and hit 'Submit'. A message will appear to let you know that the entry has been deleted. Leave the page, and when you come back it should be gone."
+
+help_container = tk.Text(help_readme_page, bg="black", fg="lightgreen", font=("Arial", 12), height=15)
+help_container.grid(column=0, row=1, rowspan=7, columnspan=1, sticky=NSEW, padx=5, pady=5)
+
+help_container.insert("1.0", help_text)
+
+home_button = tk.Button(help_readme_page, text="HOME", bg="black", fg="lightgreen", font=("Arial", 16), command=home_button_from_help).grid(column=0, row=8, columnspan=1, sticky=NSEW, padx=5, pady=5)
+
+footer_label = tk.Label(help_readme_page, text="Created by Lee Gallagher 2025", bg="green", fg="black", font=("Arial", 20)).grid(column=0, row=9, columnspan=1, sticky=NSEW, padx=5, pady=5)
 
 # (4.0) Mainloop
 
