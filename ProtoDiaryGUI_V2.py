@@ -121,7 +121,7 @@ def view_entries(): # Page 3 - View Saved Entries Page
     display_entries_to_view(saved_entries)
     view_entries_page.pack(fill="both", expand=True)
 
-def delete_entry(): # Page 4 - Delete Entry Page
+def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
     window.title("aero Text Diary - Delete Entry")
 
@@ -164,7 +164,7 @@ def delete_entry(): # Page 4 - Delete Entry Page
     home_button = tk.Button(delete_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(delete_entry_page)) # home button
     home_button.grid(row=8, column=0, columnspan=5, padx=5, pady=5, sticky="nsew")
 
-    submit_button = tk.Button(delete_entry_page, bg="red", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="delete entry") # submit button
+    submit_button = tk.Button(delete_entry_page, bg="red", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="delete entry", command=lambda: delete_entry(delete_textbox, delete_entry_page)) # submit button
     submit_button.grid(row=8, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
 
     # Footer
@@ -200,8 +200,12 @@ def help_readme():
 
     # Content
 
+    read_me = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nNew Entry\n\nOption 1 - The 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen as buttons. Simply click on the entry you wish to view. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply type in the name of the entry to delete, and hit 'Submit'. A message will appear to let you know that the entry has been deleted. Leave the page, and when you come back it should be gone."
+
     help_readme_text = tk.Text(help_readme_page, bg="lightblue", font="Helvitica 18", width=52, height=12) # help/readme displayed here
     help_readme_text.grid(row=1, rowspan=7, column=0, columnspan=8, padx=5, pady=5, sticky="nsew")
+
+    help_readme_text.insert("1.0", read_me)
 
     home_button = tk.Button(help_readme_page, bg="#245DDA", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(help_readme_page)) # home button
     home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
@@ -286,7 +290,7 @@ def visit_saved_entries(home_page):
 def visit_delete_entry(home_page):
 
     home_page.destroy()
-    delete_entry()
+    delete_entry_page_function()
 
 def visit_help_readme(home_page):
 
@@ -332,7 +336,7 @@ def display_entries_to_view(saved_entries): # displays a button for each entry t
         diary_entries = json.load(f)
 
     for i, diary_entry in enumerate(diary_entries, start=1):
-        entry_button = tk.Button(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i}. {diary_entry["title"]}", command=lambda e=diary_entry["title"]: load_entry(e)) # the lambda function that tripped me up!
+        entry_button = tk.Button(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]} - DATE: {diary_entry["date"]}", command=lambda e=diary_entry["title"]: load_entry(e)) # the lambda function that tripped me up!
         entry_button.grid(row=i-1, columnspan=1, column=0, sticky="nsew", padx=5, pady=5)
 
 def load_entry(entry_selection): # loads the chosen entry onto the "read entry" page
@@ -357,11 +361,29 @@ def display_entries_to_delete(saved_entries):
 
     for i, diary_entry in enumerate(diary_entries, start=1):
 
-        delete_entry_label = tk.Label(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i}. {diary_entry["title"]}")
-        delete_entry_label.grid(row=i-1, columnspan=4, column=0, sticky="nsew", padx=5, pady=5)
+        delete_entry_label = tk.Label(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]} - DATE: {diary_entry["date"]}")
+        delete_entry_label.grid(row=i-1, columnspan=5, column=0, sticky="nsew", padx=5, pady=5)
 
-        delete_entry_button = tk.Button(saved_entries, bg="red", fg="white", relief=tk.RAISED, bd=5, font="Helvitica 14", text="delete")
-        delete_entry_button.grid(row=i-1, columnspan=1, column=4, sticky="nsew", padx=5, pady=5)
+def delete_entry(delete_textbox, delete_entry_page): # deletes a saved entry once a title is written in the textbox and the submit button is pressed, then should refresh the entries
+
+    new_data = []
+
+    with open (diary_entries_file, 'r') as f:
+        diary_entries = json.load(f)
+
+        delete_selection = delete_textbox.get()
+
+        for diary_entry in diary_entries:
+            if diary_entry['title'] == delete_selection: # if an entry is found matching the title of entry the user wishes to delete
+                pass # allows the for loop to continue without doing anything
+            else:
+                new_data.append(diary_entry) # adds the diary entries that we want to keep back onto the JSON file
+
+    with open (diary_entries_file, 'w') as f:
+        json.dump(new_data, f, indent=4)
+
+    delete_entry_page.destroy() # destroys the current instance of the page to allow it to be loaded again (refreshed)
+    delete_entry_page_function() # brings the page up again, sans the deleted entry
 
 # ---------- PROGRAM START ---------- #
 
