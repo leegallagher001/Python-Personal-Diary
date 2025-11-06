@@ -55,7 +55,7 @@ def new_entry(): # Page 2 - Add New Entry Page
 
     new_main_label = tk.Label(new_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", text="enter article: ") # main article section
     new_main_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-    new_entry_main = tk.Text(new_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=10)
+    new_entry_main = tk.Text(new_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=10, wrap="word") # word wrap stops words from splitting when typing multiple lines
     new_entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     home_button = tk.Button(new_entry_page, bg="#81C046", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(new_entry_page)) # home button
@@ -158,7 +158,7 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
     delete_label = tk.Label(delete_entry_page, bd=5, bg="yellow", fg="black", font="Helvitica 18", text="enter title to delete") # label instructions for delete textbox
     delete_label.grid(row=7, column=0, columnspan=5, padx=5, pady=5, sticky="nsew")
 
-    delete_textbox = tk.Entry(delete_entry_page, bg="lightblue", font="Helvitica 18")
+    delete_textbox = tk.Entry(delete_entry_page, bg="lightblue", font="Helvitica 18", justify="center")
     delete_textbox.grid(row=7, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
 
     home_button = tk.Button(delete_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(delete_entry_page)) # home button
@@ -202,10 +202,12 @@ def help_readme():
 
     read_me = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nNew Entry\n\nOption 1 - The 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen as buttons. Simply click on the entry you wish to view. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply type in the name of the entry to delete, and hit 'Submit'. A message will appear to let you know that the entry has been deleted. Leave the page, and when you come back it should be gone."
 
-    help_readme_text = tk.Text(help_readme_page, bg="lightblue", font="Helvitica 18", width=52, height=12) # help/readme displayed here
+    help_readme_text = tk.Text(help_readme_page, bg="lightblue", font="Helvitica 18", width=52, height=12, wrap="word") # help/readme displayed here
     help_readme_text.grid(row=1, rowspan=7, column=0, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     help_readme_text.insert("1.0", read_me)
+
+    help_readme_text.config(state=tk.DISABLED) # makes the text box read-only
 
     home_button = tk.Button(help_readme_page, bg="#245DDA", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(help_readme_page)) # home button
     home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
@@ -245,19 +247,19 @@ def read_entry(): # Page 6 - Read Saved Entry Page
     title_label = tk.Label(read_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", text="enter title: ") # title section
     title_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_title
-    entry_title = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=1)
+    entry_title = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=1, wrap="word") # wrap = "word" makes the text display properly, stopping words from splitting
     entry_title.grid(row=1, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     date_label = tk.Label(read_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", text="enter date: ") # date section
     date_label.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_date
-    entry_date = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=1)
+    entry_date = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=1, wrap="word")
     entry_date.grid(row=2, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     main_label = tk.Label(read_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", text="enter article: ") # main article section
     main_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_main
-    entry_main = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=10)
+    entry_main = tk.Text(read_entry_page, bg="lightblue", font="Helvitica 18", width=45, height=10, wrap="word")
     entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     home_button = tk.Button(read_entry_page, bg="#245DDA", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(read_entry_page)) # home button
@@ -275,27 +277,12 @@ def read_entry(): # Page 6 - Read Saved Entry Page
     
 
 
-# ---------- HOME PAGE BUTTON FUNCTIONS ---------- #
+# ---------- HOME PAGE BUTTON FUNCTION (TO VISIT OTHER PAGE) ---------- #
 
-def visit_new_entry(home_page):
-
-    home_page.destroy()
-    new_entry()
-
-def visit_saved_entries(home_page):
+def visit_page(home_page, y):
 
     home_page.destroy()
-    view_entries()
-
-def visit_delete_entry(home_page):
-
-    home_page.destroy()
-    delete_entry_page_function()
-
-def visit_help_readme(home_page):
-
-    home_page.destroy()
-    help_readme()
+    y()
 
 # ---------- HOME BUTTONS FUNCTION ---------- #
 
@@ -352,6 +339,10 @@ def load_entry(entry_selection): # loads the chosen entry onto the "read entry" 
             entry_date.insert("1.0", diary_entry["date"])
             entry_main.insert("1.0", diary_entry["main"])
 
+            entry_title.config(state=tk.DISABLED) # makes the text field read_only
+            entry_date.config(state=tk.DISABLED) # makes the text field read_only
+            entry_main.config(state=tk.DISABLED) # makes the text field read_only
+
 # The above was for sure the most frustrating part of the program to build, but very happy with the result - and helped when it came to the delete page as well
 
 def display_entries_to_delete(saved_entries):
@@ -361,8 +352,11 @@ def display_entries_to_delete(saved_entries):
 
     for i, diary_entry in enumerate(diary_entries, start=1):
 
-        delete_entry_label = tk.Label(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]} - DATE: {diary_entry["date"]}")
-        delete_entry_label.grid(row=i-1, columnspan=5, column=0, sticky="nsew", padx=5, pady=5)
+        delete_entry_label = tk.Label(saved_entries, bg="#245DDA", fg="white", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]}")
+        delete_entry_label.grid(row=i-1, columnspan=3, column=0, sticky="nsew", padx=5, pady=5)
+
+        delete_entry_label_date = tk.Label(saved_entries, bg="lightgreen", fg="black", font="Helvitica 14", text=f"DATE: {diary_entry["date"]}")
+        delete_entry_label_date.grid(row=i-1, columnspan=2, column=3, sticky="nsew", padx=5, pady=5)
 
 def delete_entry(delete_textbox, delete_entry_page): # deletes a saved entry once a title is written in the textbox and the submit button is pressed, then should refresh the entries
 
@@ -410,16 +404,16 @@ def main(): # Page 1 - Home Page
 
     # Buttons
 
-    new_entry_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="add new entry", command=lambda: visit_new_entry(home_page))
+    new_entry_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="add new entry", command=lambda: visit_page(home_page, new_entry))
     new_entry_page.grid(row=1, rowspan=4, column=0, columnspan=5, padx=10, pady=10, sticky="nsew")
 
-    view_entries_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="view current entries", command=lambda: visit_saved_entries(home_page))
+    view_entries_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="view current entries", command=lambda: visit_page(home_page, view_entries))
     view_entries_page.grid(row=1, rowspan=4, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
 
-    delete_entry_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="delete saved entry", command=lambda: visit_delete_entry(home_page))
+    delete_entry_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="delete saved entry", command=lambda: visit_page(home_page, delete_entry_page_function))
     delete_entry_page.grid(row=5, rowspan=4, column=0, columnspan=5, padx=10, pady=10, sticky="nsew")
 
-    help_readme_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_help_readme(home_page))
+    help_readme_page = tk.Button(home_page, bg="#245DDA", fg="white", font="Helvitica 14", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_page(home_page, help_readme))
     help_readme_page.grid(row=5, rowspan=4, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
 
     # Footer
