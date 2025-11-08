@@ -24,10 +24,18 @@ This prototype has somewhat more features than PD1. It remains a console applica
 
 Instead of creating a text file, new entries are stored onto a JSON file, which has the advantages of being modifiable (allowing the addition and deletion of entries) as well as allowing the user to read a diary entry from the console application itself, rather than from an external text file. This isn’t a perfect program and there are plenty of things that could be improved upon, but overall it proved an informative exercise for my next stage of development.
 
-Prototype 3 - ProtoDiaryGUI-V1
+Prototype 3 - ProtoDiaryGUI-V1 "Fallout"
 
 GUI-V1 was my first attempt at building the features of the previous prototypes into an application that utilises a UI. The data handling of the diary entries is almost identical to that of PD2, with only a few minor differences to account for the fact that it is a UI application rather than a console one.
 
-The GUI was built using Python’s Tkinter module, which allows a user to build user interfaces using a range of widgets and grid functionality. GUI-V1 has a home page with a main menu, which has four buttons that each lead to another page (or more precisely, a different “frame”) of the application (add new entry, view current entries, delete entry and help/readme).
+The GUI was built using Python’s Tkinter module, which allows a user to build user interfaces using a range of widgets and grid functionality. GUI-V1 has a home page with a main menu, which has four buttons that each lead to another page (or more precisely, a different “frame”) of the application (add new entry, view current entries, delete entry and help/readme). The theme I went for was that of black and a moderate green tone, to emulate something similar to the terminals in the Fallout games or The Matrix.
 
 The “Add New Entry” page allows the user to enter a title, date and main body of text and then hit a “submit” button which submits the entry to the JSON file. The “View Saved Entries” page lists each of the entries as label widgets in a central frame container, and has an entry field allowing the user to enter the name of an entry and hit a “submit” button, which then opens a new frame that allows the user to read the selected entry. The “Delete Entry” page is aesthetically similar to the “View Saved Entries” page, expect that when the user enters a name and hits “submit”, instead of taking the user to the article, the entry is deleted from the JSON file. The “Help/Readme” page features some simple information pertaining to the use of the program.
+
+Prototype 4 - ProtoDiaryGUI-V2 "Aero"
+
+The second of the GUI prototypes, for "GUI-V2, or "Aero" I decided to go with a completely fresh, clean-sheet codebase, making use of the experience of building GUI-V1 but not directly copying and pasting anything over. The theme I went for with this one was that of "Frutiger Aero" - vibrant blues and greens harkening back to an early-2000's, nostalgic Windows XP-esque aesthetic.
+
+For this one, the code is much cleaner and more functional than that of GUI-V1. All of the "pages" (technically "frames") are wrapped in functions this time, and a lot more care was taken to make sure that the code was more maintainable and efficient than GUI-V1 - everything refreshes as it should now. I managed to implement a few things that I wished to implement from the beginning - viewing entries is now managed by simply clicking the entry as a button rather than having to type the title in and hit a "submit" button. The delete functionality remains the same, but I am going to change this in the next prototype, but one big improvement to this is that the deleted entry disappears from the list of entries immediately after being deleted. The big text sections are also now in a "word wrap" which means that words aren't splitting when it gets to the end of the box and onto a new line.
+
+Overall, "Aero" is a marked improvement on GUI-V1.
