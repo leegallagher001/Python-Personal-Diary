@@ -11,6 +11,8 @@ import tkinter as tk
 from tkinter import *
 import json
 from turtle import title
+import pathlib
+from pathlib import Path
 
 diary_entries_file = "pdgui-v3-entries.json"
 
@@ -304,8 +306,28 @@ def audio_entries():
 
     # Content
 
+    audio_interface_frame = tk.Frame(audio_entries_page, bg="orange") # this frame will contain the interface through which audio is played (buttons etc.)
+    audio_interface_frame.grid(row=1, rowspan=7, column=0, columnspan=5, padx=5, pady=5, sticky="nsew")
+
+    interface_rows = 3
+    interface_columns = 4
+
+    for i in range(interface_rows):
+        audio_interface_frame.grid_rowconfigure(i, weight=1)
+    for i in range(interface_columns):
+        audio_interface_frame.grid_columnconfigure(i, weight=1)
+
+    audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="orange", font="Helvitica 18") # this entry will contain the loaded audio entry to be played
+    audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
+
+    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY") # play the audio entry
+    play_btn.grid(row=1, rowspan=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+
+    stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP") # stop the audio entry
+    stop_btn.grid(row=1, rowspan=2, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
+
     audio_saved_entries = tk.Frame(audio_entries_page, bg="orange") # this frame contains the saved audio entries
-    audio_saved_entries.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    audio_saved_entries.grid(row=1, rowspan=7, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
 
     entries_rows = 10
     entries_columns = 1
