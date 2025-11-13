@@ -6,7 +6,9 @@
 
 # (0) Imports
 
+import sys
 from datetime import date
+import os
 import tkinter as tk
 from tkinter import *
 import json
@@ -16,8 +18,10 @@ from pathlib import Path
 
 diary_entries_file = "pdgui-v3-entries.json"
 
+audio_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V3\Audio Entries"
+
 window = tk.Tk()
-window.geometry("900x600")
+window.geometry("1000x600")
 
 # ---------- PAGES ---------- #
 
@@ -347,6 +351,7 @@ def audio_entries():
 
     # Pack Audio Entries Page
 
+    display_audio_entries(audio_saved_entries, audio_entry_selected)
     audio_entries_page.pack(fill='both', expand=True)
 
 # ---------- HOME PAGE BUTTON FUNCTION (TO VISIT OTHER PAGE) ---------- #
@@ -362,6 +367,12 @@ def home(x):
 
     x.destroy()
     main()
+
+# ---------- EXIT BUTTON ---------- #
+
+def exit_button():
+
+    sys.exit()
 
 # ---------- DIARY ENTRY (JSON READ/WRITE) FUNCTIONS ---------- #
 
@@ -455,6 +466,20 @@ def delete_entry(delete_entry_page, y): # deletes a saved entry once a title is 
     delete_entry_page.destroy() # destroys the current instance of the page to allow it to be loaded again (refreshed)
     delete_entry_page_function() # brings the page up again, sans the deleted entry
 
+# ---------- AUDIO ENTRIES FOLDER & PAGE FUNCTIONS ---------- #
+
+def display_audio_entries(audio_saved_entries, audio_entry_selected): # displays the audio entries as buttons in the "audio saved entries" frame
+
+    for i, audio_entry in enumerate(os.listdir(audio_entries_folder_directory), start=1):
+        audio_entry_button = tk.Button(audio_saved_entries, bg="black", fg="orange", font="Helvitica 14", text=f"{i}. {audio_entry}", command=lambda e = audio_entry: load_audio_entry(audio_entry_selected, e)) # similar lambda function as the saved text entries page
+        audio_entry_button.grid(row=i-1, columnspan=1, column=0, sticky="nsew", padx=5, pady=5)
+
+def load_audio_entry(audio_entry_selected, e):
+
+    audio_entry_selected.delete(0, tk.END) # deletes the current entry in the box
+    audio_entry_selected.insert(0, e) # loads the entry for the button pressed
+
+
 # ---------- PROGRAM START ---------- #
 
 def main(): # Page 1 - Home Page
@@ -466,7 +491,7 @@ def main(): # Page 1 - Home Page
     home_page = tk.Frame(window, bg="black") # "Honeycomb" theme - because why not!
 
     pg1rows = 12
-    pg1columns = 10
+    pg1columns = 12
 
     for i in range(pg1rows):
         home_page.grid_rowconfigure(i, weight=1)
@@ -476,29 +501,32 @@ def main(): # Page 1 - Home Page
     # Header
 
     header = tk.Label(home_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary") # Windows XP-style blue
-    header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+    header.grid(row=0, column=0, columnspan=12, padx=10, pady=5, sticky="nsew")
 
     # Buttons
 
     new_entry_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="add new entry", command=lambda: visit_page(home_page, new_entry))
-    new_entry_page.grid(row=1, rowspan=2, column=0, columnspan=10, padx=10, pady=10, sticky="nsew")
+    new_entry_page.grid(row=1, rowspan=5, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     view_entries_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="view current entries", command=lambda: visit_page(home_page, view_entries))
-    view_entries_page.grid(row=3, rowspan=2, column=0, columnspan=10, padx=10, pady=10, sticky="nsew")
+    view_entries_page.grid(row=1, rowspan=5, column=4, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     delete_entry_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="delete saved entry", command=lambda: visit_page(home_page, delete_entry_page_function))
-    delete_entry_page.grid(row=5, rowspan=2, column=0, columnspan=10, padx=10, pady=10, sticky="nsew")
+    delete_entry_page.grid(row=1, rowspan=5, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
 
-    help_readme_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_page(home_page, help_readme))
-    help_readme_page.grid(row=7, rowspan=2, column=0, columnspan=10, padx=10, pady=10, sticky="nsew")
+    help_readme_page = tk.Button(home_page, bg="yellow", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_page(home_page, help_readme))
+    help_readme_page.grid(row=6, rowspan=5, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     audio_entries_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="audio entries", command=lambda: visit_page(home_page, audio_entries))
-    audio_entries_page.grid(row=9, rowspan=2, column=0, columnspan=10, padx=10, pady=10, sticky="nsew") # the audio entries page is the big experiment of this version
+    audio_entries_page.grid(row=6, rowspan=5, column=4, columnspan=4, padx=10, pady=10, sticky="nsew") # the audio entries page is the big experiment of this version
+
+    exit_app = tk.Button(home_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=6, rowspan=5, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
     footer = tk.Label(home_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
-    footer.grid(row=11, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+    footer.grid(row=11, column=0, columnspan=12, padx=10, pady=5, sticky="nsew")
 
     # Pack Home Page
 
