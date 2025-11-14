@@ -15,10 +15,12 @@ import json
 from turtle import title
 import pathlib
 from pathlib import Path
+import pygame
+from pygame import mixer
 
 diary_entries_file = "pdgui-v3-entries.json"
 
-audio_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V3\Audio Entries"
+audio_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V3\Audio Entries" # path to the "audio entries" folder - 'r' at beginning treats the path like a raw string
 
 window = tk.Tk()
 window.geometry("1000x600")
@@ -150,7 +152,7 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
     # Content
 
     saved_entries = tk.Frame(delete_entry_page, bg="orange") # this frame contains the saved entries that will be loaded from the JSON file
-    saved_entries.grid(row=1, rowspan=6, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    saved_entries.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
 
     entries_rows = 10
     entries_columns = 10
@@ -321,13 +323,13 @@ def audio_entries():
     for i in range(interface_columns):
         audio_interface_frame.grid_columnconfigure(i, weight=1)
 
-    audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="orange", font="Helvitica 18") # this entry will contain the loaded audio entry to be played
+    audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="orange", font="Helvitica 18", justify="center") # this entry will contain the loaded audio entry to be played
     audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
 
-    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY") # play the audio entry
+    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected)) # play the audio entry
     play_btn.grid(row=1, rowspan=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
 
-    stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP") # stop the audio entry
+    stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP", command=lambda: stop_audio_entry()) # stop the audio entry
     stop_btn.grid(row=1, rowspan=2, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
 
     audio_saved_entries = tk.Frame(audio_entries_page, bg="orange") # this frame contains the saved audio entries
@@ -474,12 +476,27 @@ def display_audio_entries(audio_saved_entries, audio_entry_selected): # displays
         audio_entry_button = tk.Button(audio_saved_entries, bg="black", fg="orange", font="Helvitica 14", text=f"{i}. {audio_entry}", command=lambda e = audio_entry: load_audio_entry(audio_entry_selected, e)) # similar lambda function as the saved text entries page
         audio_entry_button.grid(row=i-1, columnspan=1, column=0, sticky="nsew", padx=5, pady=5)
 
-def load_audio_entry(audio_entry_selected, e):
+def load_audio_entry(audio_entry_selected, e): # loads the title of the audio entry into the entry box, allowing us to then call that specific entry using the play_audio_entry() function
 
     audio_entry_selected.delete(0, tk.END) # deletes the current entry in the box
     audio_entry_selected.insert(0, e) # loads the entry for the button pressed
 
+def play_audio_entry(audio_entry_selected): # uses the OS and Pygame modules to create a path to the audio entry in the folder and play it
 
+    audio_entry_to_play = audio_entry_selected.get() # retrieves the title of the file from the "selected entry" text box above
+
+    for audio_entry in os.listdir(audio_entries_folder_directory): # loops through "audio entries" folder
+        if audio_entry_to_play == audio_entry: # finds the matching entry
+            audio_entry_path = os.path.join("Audio Entries", f"{audio_entry}") # creates a path for the program to find the entry to play
+            mixer.init() # initialises Pygame's "mixer" function
+            mixer.music.load(f"{audio_entry_path}") # loads the audio entry into the "mixer"
+            mixer.music.set_volume(0.75) # sets the volume of the playback
+            mixer.music.play() # plays the audio
+
+def stop_audio_entry(): # stops the entry from playing
+
+    mixer.music.stop() # stops playback of the entry
+    
 # ---------- PROGRAM START ---------- #
 
 def main(): # Page 1 - Home Page
