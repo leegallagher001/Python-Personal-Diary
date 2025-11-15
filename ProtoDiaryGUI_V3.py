@@ -66,10 +66,13 @@ def new_entry(): # Page 2 - Add New Entry Page
     new_entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     home_button = tk.Button(new_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(new_entry_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=5, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
 
     submit_button = tk.Button(new_entry_page, bg="black", fg="orange", font="Helvitica 18", relief=tk.RAISED, bd=5, text="submit entry", command=lambda: save_new_entry(new_entry_title, new_entry_date, new_entry_main)) # submit button
-    submit_button.grid(row=8, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
+    submit_button.grid(row=8, column=3, columnspan=4, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(new_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
@@ -116,7 +119,10 @@ def view_entries(): # Page 3 - View Saved Entries Page
         saved_entries.grid_columnconfigure(i, weight=1)
 
     home_button = tk.Button(view_entries_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(view_entries_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(view_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
@@ -179,7 +185,10 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
     # Home Button
 
     home_button = tk.Button(delete_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(delete_entry_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(delete_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
@@ -224,7 +233,10 @@ def help_readme():
     help_readme_text.config(state=tk.DISABLED) # makes the text box read-only
 
     home_button = tk.Button(help_readme_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(help_readme_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(help_readme_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
     
     # Footer
 
@@ -277,7 +289,10 @@ def read_entry(): # Page 6 - Read Saved Entry Page
     entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
     home_button = tk.Button(read_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(read_entry_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(read_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
@@ -327,10 +342,19 @@ def audio_entries():
     audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
 
     play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected)) # play the audio entry
-    play_btn.grid(row=1, rowspan=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+    play_btn.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
 
     stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP", command=lambda: stop_audio_entry()) # stop the audio entry
-    stop_btn.grid(row=1, rowspan=2, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
+    stop_btn.grid(row=1, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
+
+    volume_down_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="<") # volume down button
+    volume_down_btn.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
+
+    volume_display = tk.Label(audio_interface_frame, bg="black", fg="orange", font="Helvitica 14", text="0.5") # displays the current volume
+    volume_display.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="nsew") # uses a label, so not sure how well this will work when I try to add actual functionality
+
+    volume_up_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text=">") # volume up button
+    volume_up_btn.grid(row=2, column=3, padx=5, pady=5, sticky="nsew")
 
     audio_saved_entries = tk.Frame(audio_entries_page, bg="orange") # this frame contains the saved audio entries
     audio_saved_entries.grid(row=1, rowspan=7, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
@@ -344,7 +368,10 @@ def audio_entries():
         audio_saved_entries.grid_columnconfigure(i, weight=1)
 
     home_button = tk.Button(audio_entries_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(audio_entries_page)) # home button
-    home_button.grid(row=8, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(audio_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
@@ -490,7 +517,7 @@ def play_audio_entry(audio_entry_selected): # uses the OS and Pygame modules to 
             audio_entry_path = os.path.join("Audio Entries", f"{audio_entry}") # creates a path for the program to find the entry to play
             mixer.init() # initialises Pygame's "mixer" function
             mixer.music.load(f"{audio_entry_path}") # loads the audio entry into the "mixer"
-            mixer.music.set_volume(0.75) # sets the volume of the playback
+            mixer.music.set_volume(0.5) # sets the volume of the playback
             mixer.music.play() # plays the audio
 
 def stop_audio_entry(): # stops the entry from playing
