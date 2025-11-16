@@ -341,19 +341,19 @@ def audio_entries():
     audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="orange", font="Helvitica 18", justify="center") # this entry will contain the loaded audio entry to be played
     audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
 
-    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected)) # play the audio entry
+    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected, volume_display)) # play the audio entry
     play_btn.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
 
     stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP", command=lambda: stop_audio_entry()) # stop the audio entry
     stop_btn.grid(row=1, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
 
-    volume_down_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="<") # volume down button
+    volume_down_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="<", command=lambda: volume_decrease(volume_display)) # volume down button
     volume_down_btn.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
 
     volume_display = tk.Label(audio_interface_frame, bg="black", fg="orange", font="Helvitica 14", text="0.5") # displays the current volume
     volume_display.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="nsew") # uses a label, so not sure how well this will work when I try to add actual functionality
 
-    volume_up_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text=">") # volume up button
+    volume_up_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text=">", command=lambda: volume_increase(volume_display)) # volume up button
     volume_up_btn.grid(row=2, column=3, padx=5, pady=5, sticky="nsew")
 
     audio_saved_entries = tk.Frame(audio_entries_page, bg="orange") # this frame contains the saved audio entries
@@ -508,22 +508,49 @@ def load_audio_entry(audio_entry_selected, e): # loads the title of the audio en
     audio_entry_selected.delete(0, tk.END) # deletes the current entry in the box
     audio_entry_selected.insert(0, e) # loads the entry for the button pressed
 
-def play_audio_entry(audio_entry_selected): # uses the OS and Pygame modules to create a path to the audio entry in the folder and play it
+def play_audio_entry(audio_entry_selected, volume_display): # uses the OS and Pygame modules to create a path to the audio entry in the folder and play it
 
     audio_entry_to_play = audio_entry_selected.get() # retrieves the title of the file from the "selected entry" text box above
+    audio_volume = float(volume_display["text"])
 
     for audio_entry in os.listdir(audio_entries_folder_directory): # loops through "audio entries" folder
         if audio_entry_to_play == audio_entry: # finds the matching entry
             audio_entry_path = os.path.join("Audio Entries", f"{audio_entry}") # creates a path for the program to find the entry to play
             mixer.init() # initialises Pygame's "mixer" function
             mixer.music.load(f"{audio_entry_path}") # loads the audio entry into the "mixer"
-            mixer.music.set_volume(0.5) # sets the volume of the playback
+            mixer.music.set_volume(audio_volume) # sets the volume of the playback
             mixer.music.play() # plays the audio
 
 def stop_audio_entry(): # stops the entry from playing
 
     mixer.music.stop() # stops playback of the entry
+
+def volume_increase(volume_display): # increases the audio volume in 0.1 increments when pressed
+
+    if float(volume_display["text"]) >= 0 and float(volume_display["text"]) < 1: # checks that the volume is between 0.0 and 0.9
+        audio_volume = float(volume_display["text"]) + 0.1
+        audio_volume_rounded = round(audio_volume, 1) # rounds to nearest 1 decimal place, as was getting very slight variations in numbers for some reason
+        volume_display["text"] = audio_volume_rounded
+        if pygame.mixer.get_init(): # checks to see if mixer is initiated
+            mixer.music.set_volume(audio_volume) # updates the audio volume if it is
+        else: # passes the update step if not
+            pass
+    else:
+        pass
+
+def volume_decrease(volume_display): # decreases the audio volume in 0.1 increments when pressed
     
+    if float(volume_display["text"]) > 0 and float(volume_display["text"]) <= 1: # checks that the volume is between 0.1 and 1.0
+        audio_volume = float(volume_display["text"]) - 0.1
+        audio_volume_rounded = round(audio_volume, 1) # rounds to nearest 1 decimal place, as was getting very slight variations in numbers for some reason
+        volume_display["text"] = audio_volume_rounded
+        if pygame.mixer.get_init(): # checks to see if mixer is initiated
+            mixer.music.set_volume(audio_volume) # updates the audio volume if it is
+        else: # passes the update step if not
+            pass
+    else:
+        pass
+        
 # ---------- PROGRAM START ---------- #
 
 def main(): # Page 1 - Home Page
