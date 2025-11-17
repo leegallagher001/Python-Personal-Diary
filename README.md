@@ -39,3 +39,15 @@ The second of the GUI prototypes, for "GUI-V2, or "Aero" I decided to go with a 
 For this one, the code is much cleaner and more functional than that of GUI-V1. All of the "pages" (technically "frames") are wrapped in functions this time, and a lot more care was taken to make sure that the code was more maintainable and efficient than GUI-V1 - everything refreshes as it should now. I managed to implement a few things that I wished to implement from the beginning - viewing entries is now managed by simply clicking the entry as a button rather than having to type the title in and hit a "submit" button. The delete functionality remains the same, but I am going to change this in the next prototype, but one big improvement to this is that the deleted entry disappears from the list of entries immediately after being deleted. The big text sections are also now in a "word wrap" which means that words aren't splitting when it gets to the end of the box and onto a new line.
 
 Overall, "Aero" is a marked improvement on GUI-V1.
+
+Prototype 5 - ProtoDiaryGUI-V3 "Honeycomb"
+
+The third GUI prototype, for GUI-V3 I decided to go for a "Honeycomb" theme of oranges, yellows, reds and blacks, at least for the most part. Perhaps this was due to it being around the time just after Halloween when I made it, but I think it's an interesting theme.
+
+Unlike the leap from GUI-V1 to GUI-V2, I was able to copy my work for GUI-V2 directly for this one, since it was very tidy compared to GUI-V1. However, I've been able to make major improvements with V3. 
+
+The delete functionality is now also simply a button press, although the button is much smaller than that of the "view entries" buttons, but nonetheless it's made the process of deleting entries significantly less clunky. I've also added "Exit" buttons to every page of the program, allowing the user to seamlessly exit the program from any page.
+
+I've also started to incorporate other forms of multimedia with this version, with an "Audio Entries" page where .mp3 files stored in an "Audio Entries" folder can be played in an audio interface built using Tkinter and Pygame. This was the main goal of V3.
+
+### -- An "Add Audio Entry" page is also currently being worked on for GUI-v3 -- ###
