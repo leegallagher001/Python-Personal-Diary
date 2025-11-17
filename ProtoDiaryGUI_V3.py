@@ -304,7 +304,7 @@ def read_entry(): # Page 6 - Read Saved Entry Page
     view_entries_page.destroy()
     read_entry_page.pack(fill='both', expand=True)
     
-def audio_entries():
+def audio_entries(): # Page 7 - Audio Entries Page
 
     window.title("Honeycomb Text Diary - Audio Entries")
 
@@ -342,10 +342,16 @@ def audio_entries():
     audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
 
     play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected, volume_display)) # play the audio entry
-    play_btn.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+    play_btn.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
+
+    pause_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="PAUSE", command=lambda: pause_entry()) # pauses the audio entry
+    pause_btn.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
+
+    unpause_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="UNPAUSE", command=lambda: unpause_entry()) # unpauses the audio entry
+    unpause_btn.grid(row=1, column=2, padx=5, pady=5, sticky="nsew")
 
     stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP", command=lambda: stop_audio_entry()) # stop the audio entry
-    stop_btn.grid(row=1, column=2, columnspan=2, padx=5, pady=5, sticky="nsew")
+    stop_btn.grid(row=1, column=3, padx=5, pady=5, sticky="nsew")
 
     volume_down_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="<", command=lambda: volume_decrease(volume_display)) # volume down button
     volume_down_btn.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
@@ -382,6 +388,63 @@ def audio_entries():
 
     display_audio_entries(audio_saved_entries, audio_entry_selected)
     audio_entries_page.pack(fill='both', expand=True)
+
+def add_audio_entry(): # Page 8 - Add Audio Entry Page
+
+    window.title("Honeycomb Text Diary - Add Audio Entry")
+
+    # Grid Configuration
+
+    add_audio_entry_page = tk.Frame(window, bg="black")
+
+    pg8rows = 10
+    pg8columns = 10
+
+    for i in range(pg8rows):
+        add_audio_entry_page.grid_rowconfigure(i, weight=1)
+    for i in range(pg8columns):
+        add_audio_entry_page.grid_columnconfigure(i, weight=1)
+
+    # Header
+
+    header = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Content
+
+    mp3_instruct_text = "This section allows you to add an audio recording you have already made into the diary program's storage system so it can be played later on.\n\nClick the button below to get started with adding a new .mp3 recording."
+    record_instruct_text = "This section allows you to record an audio entry on the program itself. You will have to enter how long you wish to record for before recording.\n\nClick the button below to get started with recording a new audio entry."
+
+    add_mp3_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
+    add_mp3_instructions.grid(row=1, rowspan=5, column=0, columnspan=5, padx=10, pady=10, sticky="nsew")
+    add_mp3_instructions.insert("1.0", mp3_instruct_text)
+    add_mp3_instructions.config(state = tk.DISABLED)
+
+    add_mp3_btn = tk.Button(add_audio_entry_page, bg="#245DDA", fg="white", font="Helvitica 20", text="Add MP3 Entry")
+    add_mp3_btn.grid(row=6, rowspan=2, column=0, columnspan=5, padx=10, pady=5, sticky="nsew")
+
+    record_entry_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
+    record_entry_instructions.grid(row=1, rowspan=5, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
+    record_entry_instructions.insert("1.0", record_instruct_text)
+    record_entry_instructions.config(state = tk.DISABLED)
+
+    record_btn = tk.Button(add_audio_entry_page, bg="#81C033", fg="white", font="Helvitica 20", text="Record New Entry")
+    record_btn.grid(row=6, rowspan=2, column=5, columnspan=5, padx=10, pady=5, sticky="nsew")
+
+    home_button = tk.Button(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(add_audio_entry_page)) # home button
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(add_audio_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
+
+    # Footer
+
+    footer = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Pack Audio Entries Page
+
+    add_audio_entry_page.pack(fill='both', expand=True)
 
 # ---------- HOME PAGE BUTTON FUNCTION (TO VISIT OTHER PAGE) ---------- #
 
@@ -525,6 +588,8 @@ def stop_audio_entry(): # stops the entry from playing
 
     mixer.music.stop() # stops playback of the entry
 
+# Getting these volume button functions below to work properly - both with and without audio currently playing - was a surprisingly difficult thing to pull off
+
 def volume_increase(volume_display): # increases the audio volume in 0.1 increments when pressed
 
     if float(volume_display["text"]) >= 0 and float(volume_display["text"]) < 1: # checks that the volume is between 0.0 and 0.9
@@ -548,6 +613,22 @@ def volume_decrease(volume_display): # decreases the audio volume in 0.1 increme
             mixer.music.set_volume(audio_volume) # updates the audio volume if it is
         else: # passes the update step if not
             pass
+    else:
+        pass
+
+# Having seperate buttons for pausing and unpausing is an extremely clunky solution to this problem. Will need to take a good look at this soon.
+
+def pause_entry(): # pauses the entry if playing
+
+    if pygame.mixer.get_init():
+        pygame.mixer.music.pause()
+    else:
+        pass
+
+def unpause_entry(): # unpauses the entry if paused
+
+    if pygame.mixer.get_init():
+        pygame.mixer.music.unpause()
     else:
         pass
         
@@ -577,22 +658,25 @@ def main(): # Page 1 - Home Page
     # Buttons
 
     new_entry_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="add new entry", command=lambda: visit_page(home_page, new_entry))
-    new_entry_page.grid(row=1, rowspan=5, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
+    new_entry_page.grid(row=1, rowspan=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     view_entries_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="view current entries", command=lambda: visit_page(home_page, view_entries))
-    view_entries_page.grid(row=1, rowspan=5, column=4, columnspan=4, padx=10, pady=10, sticky="nsew")
+    view_entries_page.grid(row=1, rowspan=4, column=4, columnspan=4, padx=10, pady=10, sticky="nsew")
 
     delete_entry_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="delete saved entry", command=lambda: visit_page(home_page, delete_entry_page_function))
-    delete_entry_page.grid(row=1, rowspan=5, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
+    delete_entry_page.grid(row=1, rowspan=4, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
 
-    help_readme_page = tk.Button(home_page, bg="yellow", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_page(home_page, help_readme))
-    help_readme_page.grid(row=6, rowspan=5, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
+    add_audio_entry_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="add audio entry", command=lambda: visit_page(home_page, add_audio_entry))
+    add_audio_entry_page.grid(row=5, rowspan=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
-    audio_entries_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="audio entries", command=lambda: visit_page(home_page, audio_entries))
-    audio_entries_page.grid(row=6, rowspan=5, column=4, columnspan=4, padx=10, pady=10, sticky="nsew") # the audio entries page is the big experiment of this version
+    audio_entries_page = tk.Button(home_page, bg="orange", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="current audio entries", command=lambda: visit_page(home_page, audio_entries))
+    audio_entries_page.grid(row=5, rowspan=4, column=4, columnspan=4, padx=10, pady=10, sticky="nsew") # the audio entries page is the big experiment of this version
 
     exit_app = tk.Button(home_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
-    exit_app.grid(row=6, rowspan=5, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
+    exit_app.grid(row=5, rowspan=4, column=8, columnspan=4, padx=10, pady=10, sticky="nsew")
+
+    help_readme_page = tk.Button(home_page, bg="yellow", fg="black", font="Helvitica 16", relief=tk.RAISED, bd=5, text="help & readme", command=lambda: visit_page(home_page, help_readme))
+    help_readme_page.grid(row=9, rowspan=2, column=0, columnspan=12, padx=10, pady=10, sticky="nsew")
 
     # Footer
 
