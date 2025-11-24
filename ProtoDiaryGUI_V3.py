@@ -11,12 +11,14 @@ from datetime import date
 import os
 import tkinter as tk
 from tkinter import *
-import json
+from tkinter import filedialog
+from tkinter.filedialog import askdirectory, askopenfilename # used on "Add Audio Entry" page
+import json # used for text entry storage
 from turtle import title
 import pathlib
 from pathlib import Path
-import pygame
-from pygame import mixer
+import pygame 
+from pygame import mixer # used to play audio entries
 
 diary_entries_file = "pdgui-v3-entries.json"
 
@@ -412,21 +414,27 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
 
     # Content
 
-    mp3_instruct_text = "This section allows you to add an audio recording you have already made into the diary program's storage system so it can be played later on.\n\nClick the button below to get started with adding a new .mp3 recording."
-    record_instruct_text = "This section allows you to record an audio entry on the program itself. You will have to enter how long you wish to record for before recording.\n\nClick the button below to get started with recording a new audio entry."
+    mp3_instruct_text = "This section allows you to add an audio recording you have already made into the diary program's storage system so it can be played later on.\n\nClick the button, drag or paste your .mp3 file into the folder, and close the window - simple!\n\nYou should have your file copied and ready to be pasted into the file or otherwise accessible to be dragged into the folder."
+    record_instruct_text = "This section allows you to record an audio entry on the program itself. You will have to enter how long you wish to record for before recording.\n\nEnter a time (in seconds) then click the button below to get started with recording a new audio entry."
 
     add_mp3_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
     add_mp3_instructions.grid(row=1, rowspan=5, column=0, columnspan=5, padx=10, pady=10, sticky="nsew")
     add_mp3_instructions.insert("1.0", mp3_instruct_text)
     add_mp3_instructions.config(state = tk.DISABLED)
 
-    add_mp3_btn = tk.Button(add_audio_entry_page, bg="#245DDA", fg="white", font="Helvitica 20", text="Add MP3 Entry")
+    add_mp3_btn = tk.Button(add_audio_entry_page, bg="#245DDA", fg="white", font="Helvitica 20", text="Add MP3 Entry", command=lambda:filedialog.askopenfilename(initialdir=audio_entries_folder_directory, filetypes=[("Audio Files", "*.mp3")]))
     add_mp3_btn.grid(row=6, rowspan=2, column=0, columnspan=5, padx=10, pady=5, sticky="nsew")
 
     record_entry_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
-    record_entry_instructions.grid(row=1, rowspan=5, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
+    record_entry_instructions.grid(row=1, rowspan=4, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
     record_entry_instructions.insert("1.0", record_instruct_text)
     record_entry_instructions.config(state = tk.DISABLED)
+
+    enter_time_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Enter Recording Time (Seconds)")
+    enter_time_label.grid(row=5, column=5, columnspan=4, padx=10, pady=5, sticky="nsew")
+
+    enter_time_entry = tk.Entry(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 16", justify="center", width=8)
+    enter_time_entry.grid(row=5, column=9, padx=10, pady=5, sticky="nsew")
 
     record_btn = tk.Button(add_audio_entry_page, bg="#81C033", fg="white", font="Helvitica 20", text="Record New Entry")
     record_btn.grid(row=6, rowspan=2, column=5, columnspan=5, padx=10, pady=5, sticky="nsew")
