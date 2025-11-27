@@ -9,9 +9,9 @@
 import sys
 from datetime import date
 import os
-import tkinter as tk
+import tkinter as tk # for UI
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog # used on "Add Audio Entry" page
 from tkinter.filedialog import askdirectory, askopenfilename # used on "Add Audio Entry" page
 import json # used for text entry storage
 from turtle import title
@@ -19,6 +19,10 @@ import pathlib
 from pathlib import Path
 import pygame 
 from pygame import mixer # used to play audio entries
+import sounddevice as sd # used to record audio
+from scipy.io.wavfile import write # used to write audio data to a file
+import wavio as wv # used to create a .wav file for audio
+from pydub import AudioSegment # used to convert .wav to .mp3 - also need to pip install "ffmpeg" for this to work
 
 diary_entries_file = "pdgui-v3-entries.json"
 
@@ -426,17 +430,23 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
     add_mp3_btn.grid(row=6, rowspan=2, column=0, columnspan=5, padx=10, pady=5, sticky="nsew")
 
     record_entry_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
-    record_entry_instructions.grid(row=1, rowspan=4, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
+    record_entry_instructions.grid(row=1, rowspan=3, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
     record_entry_instructions.insert("1.0", record_instruct_text)
     record_entry_instructions.config(state = tk.DISABLED)
 
-    enter_time_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Enter Recording Time (Seconds)")
+    enter_filename_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Entry Name") # Allows user to enter a file name for their recording
+    enter_filename_label.grid(row=4, column=5, columnspan=3, padx=10, pady=5, sticky="nsew")
+
+    enter_filename_entry = tk.Entry(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 16", justify="center", width=8)
+    enter_filename_entry.grid(row=4, column=8, columnspan=2, padx=10, pady=5, sticky="nsew")
+
+    enter_time_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Enter Recording Time (Seconds)") # Allows user to set duration of recording - only way to do it in Python it seems
     enter_time_label.grid(row=5, column=5, columnspan=4, padx=10, pady=5, sticky="nsew")
 
     enter_time_entry = tk.Entry(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 16", justify="center", width=8)
     enter_time_entry.grid(row=5, column=9, padx=10, pady=5, sticky="nsew")
 
-    record_btn = tk.Button(add_audio_entry_page, bg="#81C033", fg="white", font="Helvitica 20", text="Record New Entry")
+    record_btn = tk.Button(add_audio_entry_page, bg="#81C033", fg="white", font="Helvitica 20", text="Record New Entry", command=lambda: record_audio_entry(enter_filename_entry, enter_time_entry))
     record_btn.grid(row=6, rowspan=2, column=5, columnspan=5, padx=10, pady=5, sticky="nsew")
 
     home_button = tk.Button(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(add_audio_entry_page)) # home button
@@ -639,6 +649,32 @@ def unpause_entry(): # unpauses the entry if paused
         pygame.mixer.music.unpause()
     else:
         pass
+
+# ---------- ADD AUDIO ENTRIES PAGE (RECORD ENTRY) FUNCTION ---------- #
+
+def record_audio_entry(enter_filename_entry, enter_time_entry): # allows the user to record a new entry
+
+    filename = enter_filename_entry.get() # takes name from entry name input
+
+    record_time = int(enter_time_entry.get()) # takes time from time entry input
+
+    freq = 44100
+
+    duration = record_time
+
+    recording = sd.rec(int(duration * freq), samplerate=freq, channels=2) # starts recording
+
+    sd.wait() # records audio for given number of seconds
+
+    wv.write(f"{filename}.wav", recording, freq, sampwidth=2)
+
+    # INVESTIGATION REQUIRED - it's going to take a significant amount of digging to figure out exactly how I managed to get the next two lines to work
+    # as for the longest time it didn't and then after trying about 20 different things it just...did. Also, theres still an error message in the console
+    # that pops up upon program start
+
+    AudioSegment.converter = r"C:\ffmpeg-8.0.1-full_build\ffmpeg-8.0.1-full_build\bin\ffmpeg.exe"
+
+    new_audio_entry = AudioSegment.from_wav(f"{filename}.wav").export(f"Audio Entries/{filename}.mp3", format="mp3")
         
 # ---------- PROGRAM START ---------- #
 
