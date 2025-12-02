@@ -1,0 +1,22 @@
+[
+    {
+        "title": "The Next Stage",
+        "date": "12/11/2025",
+        "main": "The next stage of the diary that I need to get up and running is the \"Audio Entries\" page. I've got the template of it \"sketched out\" on the page already as it were, but the functionality is going to be the challenge now.\n\nI've not worked with audio in Python before and it looks like I might need to use Pygame."
+    },
+    {
+        "title": "Audio Entries Built!",
+        "date": "13/11/2025",
+        "main": "I was able to install the Pygame module and use it to complete the functionality of my \"Audio Entries\" page. The page can now display the audio entries in the folder as buttons, use those buttons to choose an entry and load it into the audio interface, and then use that audio interface to play and stop playing the audio entry!\n\nLee"
+    },
+    {
+        "title": "Completed Audio Interface (Nearly)",
+        "date": "17/11/2025",
+        "main": "Been working on the program every day, and I can't believe that I've been able to get as far as I have with it. A fully-functioning program that can create and store text entries as well as play audio entries - it's wild.\n\nNo rest though, time to figure out how to add audio entries to the program. Then after that, it'll be time for GUI-V4.\n\nLee"
+    },
+    {
+        "title": "Audio Recording Works!",
+        "date": "27/11/2025",
+        "main": "So I managed to get audio recording to work after about a day of plodding away at it. Getting the actual recording to work was surprisingly simple, using sounddevice and scipy and wavio. However, getting the conversion from a .wav file to a .mp3 file (the type this program recognises) was an interesting task to say the least.\n\nNext steps are to improve the experience of recording an audio entry (visible timer, add dates to the view audio entries page so stuff is in order etc.) but we are getting there!"
+    }
+]
