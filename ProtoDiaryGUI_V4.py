@@ -38,11 +38,11 @@ window.geometry("1000x600")
 
 def new_entry(): # Page 2 - Add New Entry Page
 
-    window.title("Honeycomb Text Diary - Add New Entry")
+    window.title("Mystery Text Diary - Add New Entry")
 
     # Grid Configuration
 
-    new_entry_page = tk.Frame(window, bg="black")
+    new_entry_page = tk.Frame(window, bg="maroon")
 
     pg2rows = 10
     pg2columns = 10
@@ -54,30 +54,30 @@ def new_entry(): # Page 2 - Add New Entry Page
 
     # Header
 
-    header = tk.Label(new_entry_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(new_entry_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
-    new_title_label = tk.Label(new_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter title: ") # title section
+    new_title_label = tk.Label(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="enter title: ") # title section
     new_title_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-    new_entry_title = tk.Text(new_entry_page, bg="orange", font="Helvitica 18", width=45, height=1)
+    new_entry_title = tk.Text(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=1)
     new_entry_title.grid(row=1, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    new_date_label = tk.Label(new_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter date: ") # date section
+    new_date_label = tk.Label(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="enter date: ") # date section
     new_date_label.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-    new_entry_date = tk.Text(new_entry_page, bg="orange", font="Helvitica 18", width=45, height=1)
+    new_entry_date = tk.Text(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=1)
     new_entry_date.grid(row=2, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    new_main_label = tk.Label(new_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter article: ") # main article section
+    new_main_label = tk.Label(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="enter article: ") # main article section
     new_main_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-    new_entry_main = tk.Text(new_entry_page, bg="orange", font="Helvitica 18", width=45, height=10, wrap="word") # word wrap stops words from splitting when typing multiple lines
+    new_entry_main = tk.Text(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=10, wrap="word") # word wrap stops words from splitting when typing multiple lines
     new_entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    home_button = tk.Button(new_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(new_entry_page)) # home button
+    home_button = tk.Button(new_entry_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(new_entry_page)) # home button
     home_button.grid(row=8, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
 
-    submit_button = tk.Button(new_entry_page, bg="black", fg="orange", font="Helvitica 18", relief=tk.RAISED, bd=5, text="submit entry", command=lambda: save_new_entry(new_entry_title, new_entry_date, new_entry_main)) # submit button
+    submit_button = tk.Button(new_entry_page, bg="grey", fg="maroon", font="Helvitica 18", relief=tk.RAISED, bd=5, text="submit entry", command=lambda: save_new_entry(new_entry_title, new_entry_date, new_entry_main)) # submit button
     submit_button.grid(row=8, column=3, columnspan=4, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(new_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -85,7 +85,7 @@ def new_entry(): # Page 2 - Add New Entry Page
 
     # Footer
 
-    footer = tk.Label(new_entry_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(new_entry_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack New Entry Page
@@ -94,12 +94,12 @@ def new_entry(): # Page 2 - Add New Entry Page
 
 def view_entries(): # Page 3 - View Saved Entries Page
 
-    window.title("Honeycomb Text Diary - View Saved Entries")
+    window.title("Mystery Text Diary - View Saved Entries")
 
     # Grid Configuration
 
     global view_entries_page
-    view_entries_page = tk.Frame(window, bg="black")
+    view_entries_page = tk.Frame(window, bg="maroon")
 
     pg3rows = 10
     pg3columns = 10
@@ -111,12 +111,12 @@ def view_entries(): # Page 3 - View Saved Entries Page
 
     # Header
 
-    header = tk.Label(view_entries_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(view_entries_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
-    saved_entries = tk.Frame(view_entries_page, bg="orange") # this frame contains the saved entries that will be loaded from the JSON file
+    saved_entries = tk.Frame(view_entries_page, bg="maroon") # this frame contains the saved entries that will be loaded from the JSON file
     saved_entries.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
 
     entries_rows = 10
@@ -127,7 +127,7 @@ def view_entries(): # Page 3 - View Saved Entries Page
     for i in range(entries_columns):
         saved_entries.grid_columnconfigure(i, weight=1)
 
-    home_button = tk.Button(view_entries_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(view_entries_page)) # home button
+    home_button = tk.Button(view_entries_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(view_entries_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(view_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -135,7 +135,7 @@ def view_entries(): # Page 3 - View Saved Entries Page
 
     # Footer
 
-    footer = tk.Label(view_entries_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(view_entries_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack View Saved Entries Page
@@ -145,11 +145,11 @@ def view_entries(): # Page 3 - View Saved Entries Page
 
 def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
-    window.title("Honeycomb Text Diary - Delete Entry")
+    window.title("Mystery Text Diary - Delete Entry")
 
     # Grid Configuration
 
-    delete_entry_page = tk.Frame(window, bg="black")
+    delete_entry_page = tk.Frame(window, bg="maroon")
 
     pg4rows = 10
     pg4columns = 10
@@ -161,12 +161,12 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
     # Header
 
-    header = tk.Label(delete_entry_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(delete_entry_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
-    saved_entries = tk.Frame(delete_entry_page, bg="orange") # this frame contains the saved entries that will be loaded from the JSON file
+    saved_entries = tk.Frame(delete_entry_page, bg="maroon") # this frame contains the saved entries that will be loaded from the JSON file
     saved_entries.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
 
     entries_rows = 10
@@ -179,21 +179,21 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
     # Saved Entries Header Section
 
-    saved_number = tk.Label(saved_entries, bg="black", fg="orange", font="Helvitica 14", text="No.")
+    saved_number = tk.Label(saved_entries, bg="black", fg="white", font="Helvitica 14", text="No.")
     saved_number.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-    saved_title = tk.Label(saved_entries, bg="black", fg="orange", font="Helvitica 14", text="Title")
+    saved_title = tk.Label(saved_entries, bg="black", fg="white", font="Helvitica 14", text="Title")
     saved_title.grid(row=0, column=1, columnspan=4, sticky="nsew", padx=5, pady=5)
 
-    saved_date = tk.Label(saved_entries, bg="black", fg="orange", font="Helvitica 14", text="Date")
+    saved_date = tk.Label(saved_entries, bg="black", fg="white", font="Helvitica 14", text="Date")
     saved_date.grid(row=0, column=5, columnspan=4, sticky="nsew", padx=5, pady=5)
 
-    saved_button = tk.Label(saved_entries, bg="black", fg="orange", font="Helvitica 14", text="Delete?")
+    saved_button = tk.Label(saved_entries, bg="black", fg="white", font="Helvitica 14", text="Delete?")
     saved_button.grid(row=0, column=9, sticky="nsew", padx=5, pady=5)
 
     # Home Button
 
-    home_button = tk.Button(delete_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(delete_entry_page)) # home button
+    home_button = tk.Button(delete_entry_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(delete_entry_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(delete_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -201,7 +201,7 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
     # Footer
 
-    footer = tk.Label(delete_entry_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(delete_entry_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack Delete Entry Page
@@ -211,11 +211,11 @@ def delete_entry_page_function(): # Page 4 - Delete Entry Page
 
 def help_readme():
 
-    window.title("Honeycomb Text Diary - Help & Readme")
+    window.title("Mystery Text Diary - Help & Readme")
 
     # Grid Configuration
 
-    help_readme_page = tk.Frame(window, bg="black")
+    help_readme_page = tk.Frame(window, bg="maroon")
 
     pg5rows = 10
     pg5columns = 10
@@ -227,21 +227,21 @@ def help_readme():
 
     # Header
 
-    header = tk.Label(help_readme_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(help_readme_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
     read_me = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nNew Entry\n\nOption 1 - The 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen as buttons. Simply click on the entry you wish to view. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply type in the name of the entry to delete, and hit 'Submit'. A message will appear to let you know that the entry has been deleted. Leave the page, and when you come back it should be gone.\n\nOption 4 - Audio Entries\n\nPage Under Construction."
 
-    help_readme_text = tk.Text(help_readme_page, bg="orange", font="Helvitica 18", width=52, height=12, wrap="word") # help/readme displayed here
+    help_readme_text = tk.Text(help_readme_page, bg="grey", fg="maroon", font="Helvitica 18", width=52, height=12, wrap="word") # help/readme displayed here
     help_readme_text.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
 
     help_readme_text.insert("1.0", read_me)
 
     help_readme_text.config(state=tk.DISABLED) # makes the text box read-only
 
-    home_button = tk.Button(help_readme_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(help_readme_page)) # home button
+    home_button = tk.Button(help_readme_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(help_readme_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(help_readme_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -249,7 +249,7 @@ def help_readme():
     
     # Footer
 
-    footer = tk.Label(help_readme_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(help_readme_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack Help & Readme Page
@@ -258,11 +258,11 @@ def help_readme():
 
 def read_entry(): # Page 6 - Read Saved Entry Page
 
-    window.title("Honeycomb Text Diary - Read Entry")
+    window.title("Mystery Text Diary - Read Entry")
 
     # Grid Configuration
 
-    read_entry_page = tk.Frame(window, bg="black")
+    read_entry_page = tk.Frame(window, bg="maroon")
 
     pg6rows = 10
     pg6columns = 10
@@ -274,30 +274,30 @@ def read_entry(): # Page 6 - Read Saved Entry Page
 
     # Header
 
-    header = tk.Label(read_entry_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(read_entry_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
-    title_label = tk.Label(read_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter title: ") # title section
+    title_label = tk.Label(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="entry title: ") # title section
     title_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_title
-    entry_title = tk.Text(read_entry_page, bg="orange", font="Helvitica 18", width=45, height=1, wrap="word") # wrap = "word" makes the text display properly, stopping words from splitting
+    entry_title = tk.Text(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=1, wrap="word") # wrap = "word" makes the text display properly, stopping words from splitting
     entry_title.grid(row=1, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    date_label = tk.Label(read_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter date: ") # date section
+    date_label = tk.Label(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="entry date: ") # date section
     date_label.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_date
-    entry_date = tk.Text(read_entry_page, bg="orange", font="Helvitica 18", width=45, height=1, wrap="word")
+    entry_date = tk.Text(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=1, wrap="word")
     entry_date.grid(row=2, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    main_label = tk.Label(read_entry_page, bg="orange", fg="black", font="Helvitica 18", text="enter article: ") # main article section
+    main_label = tk.Label(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", text="entry article: ") # main article section
     main_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
     global entry_main
-    entry_main = tk.Text(read_entry_page, bg="orange", font="Helvitica 18", width=45, height=10, wrap="word")
+    entry_main = tk.Text(read_entry_page, bg="grey", fg="maroon", font="Helvitica 18", width=45, height=10, wrap="word")
     entry_main.grid(row=3, rowspan=5, column=2, columnspan=8, padx=5, pady=5, sticky="nsew")
 
-    home_button = tk.Button(read_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(read_entry_page)) # home button
+    home_button = tk.Button(read_entry_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(read_entry_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(read_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -305,7 +305,7 @@ def read_entry(): # Page 6 - Read Saved Entry Page
 
     # Footer
 
-    footer = tk.Label(read_entry_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(read_entry_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack Read Entry Page
@@ -315,11 +315,11 @@ def read_entry(): # Page 6 - Read Saved Entry Page
     
 def audio_entries(): # Page 7 - Audio Entries Page
 
-    window.title("Honeycomb Text Diary - Audio Entries")
+    window.title("Mystery Text Diary - Audio Entries")
 
     # Grid Configuration
 
-    audio_entries_page = tk.Frame(window, bg="black")
+    audio_entries_page = tk.Frame(window, bg="maroon")
 
     pg7rows = 10
     pg7columns = 10
@@ -331,12 +331,12 @@ def audio_entries(): # Page 7 - Audio Entries Page
 
     # Header
 
-    header = tk.Label(audio_entries_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(audio_entries_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
 
-    audio_interface_frame = tk.Frame(audio_entries_page, bg="orange") # this frame will contain the interface through which audio is played (buttons etc.)
+    audio_interface_frame = tk.Frame(audio_entries_page, bg="grey") # this frame will contain the interface through which audio is played (buttons etc.)
     audio_interface_frame.grid(row=1, rowspan=7, column=0, columnspan=5, padx=5, pady=5, sticky="nsew")
 
     interface_rows = 3
@@ -347,31 +347,31 @@ def audio_entries(): # Page 7 - Audio Entries Page
     for i in range(interface_columns):
         audio_interface_frame.grid_columnconfigure(i, weight=1)
 
-    audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="orange", font="Helvitica 18", justify="center") # this entry will contain the loaded audio entry to be played
+    audio_entry_selected = tk.Entry(audio_interface_frame, bg="black", fg="red", font="Helvitica 18", justify="center") # this entry will contain the loaded audio entry to be played
     audio_entry_selected.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky="nsew")
 
-    play_btn = tk.Button(audio_interface_frame, bg="orange", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected, volume_display)) # play the audio entry
+    play_btn = tk.Button(audio_interface_frame, bg="maroon", fg="white", font="Helvitica 20", text="PLAY", command=lambda: play_audio_entry(audio_entry_selected, volume_display)) # play the audio entry
     play_btn.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
 
-    pause_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="PAUSE", command=lambda: pause_entry()) # pauses the audio entry
+    pause_btn = tk.Button(audio_interface_frame, bg="black", fg="white", font="Helvitica 20", text="PAUSE", command=lambda: pause_entry()) # pauses the audio entry
     pause_btn.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
 
-    unpause_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="UNPAUSE", command=lambda: unpause_entry()) # unpauses the audio entry
+    unpause_btn = tk.Button(audio_interface_frame, bg="black", fg="white", font="Helvitica 20", text="UNPAUSE", command=lambda: unpause_entry()) # unpauses the audio entry
     unpause_btn.grid(row=1, column=2, padx=5, pady=5, sticky="nsew")
 
     stop_btn = tk.Button(audio_interface_frame, bg="red", fg="black", font="Helvitica 20", text="STOP", command=lambda: stop_audio_entry()) # stop the audio entry
     stop_btn.grid(row=1, column=3, padx=5, pady=5, sticky="nsew")
 
-    volume_down_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text="<", command=lambda: volume_decrease(volume_display)) # volume down button
+    volume_down_btn = tk.Button(audio_interface_frame, bg="black", fg="red", font="Helvitica 20", text="<", command=lambda: volume_decrease(volume_display)) # volume down button
     volume_down_btn.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
 
-    volume_display = tk.Label(audio_interface_frame, bg="black", fg="orange", font="Helvitica 14", text="0.5") # displays the current volume
+    volume_display = tk.Label(audio_interface_frame, bg="black", fg="red", font="Helvitica 14", text="0.5") # displays the current volume
     volume_display.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="nsew") # uses a label, so not sure how well this will work when I try to add actual functionality
 
-    volume_up_btn = tk.Button(audio_interface_frame, bg="yellow", fg="black", font="Helvitica 20", text=">", command=lambda: volume_increase(volume_display)) # volume up button
+    volume_up_btn = tk.Button(audio_interface_frame, bg="black", fg="red", font="Helvitica 20", text=">", command=lambda: volume_increase(volume_display)) # volume up button
     volume_up_btn.grid(row=2, column=3, padx=5, pady=5, sticky="nsew")
 
-    audio_saved_entries = tk.Frame(audio_entries_page, bg="orange") # this frame contains the saved audio entries
+    audio_saved_entries = tk.Frame(audio_entries_page, bg="maroon") # this frame contains the saved audio entries
     audio_saved_entries.grid(row=1, rowspan=7, column=5, columnspan=5, padx=5, pady=5, sticky="nsew")
 
     entries_rows = 10
@@ -382,7 +382,7 @@ def audio_entries(): # Page 7 - Audio Entries Page
     for i in range(entries_columns):
         audio_saved_entries.grid_columnconfigure(i, weight=1)
 
-    home_button = tk.Button(audio_entries_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(audio_entries_page)) # home button
+    home_button = tk.Button(audio_entries_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(audio_entries_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(audio_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -390,7 +390,7 @@ def audio_entries(): # Page 7 - Audio Entries Page
 
     # Footer
 
-    footer = tk.Label(audio_entries_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(audio_entries_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack Audio Entries Page
@@ -400,11 +400,11 @@ def audio_entries(): # Page 7 - Audio Entries Page
 
 def add_audio_entry(): # Page 8 - Add Audio Entry Page
 
-    window.title("Honeycomb Text Diary - Add Audio Entry")
+    window.title("Mystery Text Diary - Add Audio Entry")
 
     # Grid Configuration
 
-    add_audio_entry_page = tk.Frame(window, bg="black")
+    add_audio_entry_page = tk.Frame(window, bg="maroon")
 
     pg8rows = 10
     pg8columns = 10
@@ -416,7 +416,7 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
 
     # Header
 
-    header = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 40", text="honeycomb text diary")
+    header = tk.Label(add_audio_entry_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
     header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Content
@@ -424,38 +424,38 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
     mp3_instruct_text = "This section allows you to add an audio recording you have already made into the diary program's storage system so it can be played later on.\n\nClick the button, drag or paste your .mp3 file into the folder, and close the window - simple!\n\nYou should have your file copied and ready to be pasted into the file or otherwise accessible to be dragged into the folder."
     record_instruct_text = "This section allows you to record an audio entry on the program itself. You will have to enter how long you wish to record for before recording.\n\nEnter a time (in seconds) then click the button below to get started with recording a new audio entry."
 
-    add_mp3_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
+    add_mp3_instructions = tk.Text(add_audio_entry_page, bg="grey", fg="maroon", font="Helvitica 20", wrap="word", height=8, width=30)
     add_mp3_instructions.grid(row=1, rowspan=5, column=0, columnspan=5, padx=10, pady=10, sticky="nsew")
     add_mp3_instructions.insert("1.0", mp3_instruct_text)
     add_mp3_instructions.config(state = tk.DISABLED)
 
-    add_mp3_btn = tk.Button(add_audio_entry_page, bg="#245DDA", fg="white", font="Helvitica 20", text="Add MP3 Entry", command=lambda:filedialog.askopenfilename(initialdir=audio_entries_folder_directory, filetypes=[("Audio Files", "*.mp3")]))
+    add_mp3_btn = tk.Button(add_audio_entry_page, bg="black", fg="white", font="Helvitica 20", text="Add MP3 Entry", command=lambda:filedialog.askopenfilename(initialdir=audio_entries_folder_directory, filetypes=[("Audio Files", "*.mp3")]))
     add_mp3_btn.grid(row=6, rowspan=2, column=0, columnspan=5, padx=10, pady=5, sticky="nsew")
 
-    record_entry_instructions = tk.Text(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 20", wrap="word", height=8, width=30)
+    record_entry_instructions = tk.Text(add_audio_entry_page, bg="grey", fg="maroon", font="Helvitica 20", wrap="word", height=8, width=30)
     record_entry_instructions.grid(row=1, rowspan=3, column=5, columnspan=5, padx=10, pady=10, sticky="nsew")
     record_entry_instructions.insert("1.0", record_instruct_text)
     record_entry_instructions.config(state = tk.DISABLED)
 
-    enter_filename_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Entry Name") # Allows user to enter a file name for their recording
+    enter_filename_label = tk.Label(add_audio_entry_page, bg="grey", fg="maroon", font="Helvitica 16", text="Entry Name") # Allows user to enter a file name for their recording
     enter_filename_label.grid(row=4, column=5, columnspan=3, padx=10, pady=5, sticky="nsew")
 
-    enter_filename_entry = tk.Entry(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 16", justify="center", width=8)
+    enter_filename_entry = tk.Entry(add_audio_entry_page, bg="maroon", fg="white", font="Helvitica 16", justify="center", width=8)
     enter_filename_entry.grid(row=4, column=8, columnspan=2, padx=10, pady=5, sticky="nsew")
 
-    enter_time_label = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 16", text="Time (Seconds)") # Allows user to set duration of recording - only way to do it in Python it seems
+    enter_time_label = tk.Label(add_audio_entry_page, bg="grey", fg="maroon", font="Helvitica 16", text="Time (Seconds)") # Allows user to set duration of recording - only way to do it in Python it seems
     enter_time_label.grid(row=5, column=5, columnspan=3, padx=10, pady=5, sticky="nsew")
 
-    enter_time_entry = tk.Entry(add_audio_entry_page, bg="yellow", fg="black", font="Helvitica 16", justify="center", width=8)
+    enter_time_entry = tk.Entry(add_audio_entry_page, bg="maroon", fg="white", font="Helvitica 16", justify="center", width=8)
     enter_time_entry.grid(row=5, column=8, padx=10, pady=5, sticky="nsew")
 
     timer_label = tk.Entry(add_audio_entry_page, bg="grey", fg="white", font="Helvitica 16") # Timer that shows how long the user has during a recording
     timer_label.grid(row=5, column=9, padx=10, pady=5, sticky="nsew")
 
-    record_btn = tk.Button(add_audio_entry_page, bg="#81C033", fg="white", font="Helvitica 20", text="Record New Entry", command=lambda: record_audio_entry(enter_filename_entry, enter_time_entry, timer_label))
+    record_btn = tk.Button(add_audio_entry_page, bg="white", fg="black", font="Helvitica 20", text="Record New Entry", command=lambda: record_audio_entry(enter_filename_entry, enter_time_entry, timer_label))
     record_btn.grid(row=6, rowspan=2, column=5, columnspan=5, padx=10, pady=5, sticky="nsew")
 
-    home_button = tk.Button(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(add_audio_entry_page)) # home button
+    home_button = tk.Button(add_audio_entry_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(add_audio_entry_page)) # home button
     home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
 
     exit_app = tk.Button(add_audio_entry_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
@@ -463,7 +463,7 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
 
     # Footer
 
-    footer = tk.Label(add_audio_entry_page, bg="orange", fg="black", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer = tk.Label(add_audio_entry_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
     footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
 
     # Pack Audio Entries Page
@@ -522,7 +522,7 @@ def display_entries_to_view(saved_entries): # displays a button for each entry t
         diary_entries = json.load(f)
 
     for i, diary_entry in enumerate(diary_entries, start=1):
-        entry_button = tk.Button(saved_entries, bg="black", fg="orange", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]} - DATE: {diary_entry["date"]}", command=lambda e=diary_entry["title"]: load_entry(e)) # the lambda function that tripped me up!
+        entry_button = tk.Button(saved_entries, bg="grey", fg="maroon", font="Helvitica 14", text=f"{i} - TITLE: {diary_entry["title"]} - DATE: {diary_entry["date"]}", command=lambda e=diary_entry["title"]: load_entry(e)) # the lambda function that tripped me up!
         entry_button.grid(row=i-1, columnspan=1, column=0, sticky="nsew", padx=5, pady=5)
 
 def load_entry(entry_selection): # loads the chosen entry onto the "read entry" page
@@ -551,16 +551,16 @@ def display_entries_to_delete(saved_entries, delete_entry_page):
 
     for i, diary_entry in enumerate(diary_entries, start=1): # generates a columned list of current entries - looks quite a bit better than GUI-V2 I think
 
-        delete_entry_number = tk.Label(saved_entries, bg="darkorange", fg="black", font="Helvitica 14", text=f"{i}")
+        delete_entry_number = tk.Label(saved_entries, bg="grey", fg="maroon", font="Helvitica 14", text=f"{i}")
         delete_entry_number.grid(row=i, column=0, sticky="nsew", padx=5, pady=5)
 
-        delete_entry_label = tk.Label(saved_entries, bg="darkorange", fg="black", font="Helvitica 14", text=f"{diary_entry["title"]}")
+        delete_entry_label = tk.Label(saved_entries, bg="grey", fg="maroon", font="Helvitica 14", text=f"{diary_entry["title"]}")
         delete_entry_label.grid(row=i, columnspan=4, column=1, sticky="nsew", padx=5, pady=5)
 
-        delete_entry_label_date = tk.Label(saved_entries, bg="darkorange", fg="black", font="Helvitica 14", text=f"{diary_entry["date"]}")
+        delete_entry_label_date = tk.Label(saved_entries, bg="grey", fg="maroon", font="Helvitica 14", text=f"{diary_entry["date"]}")
         delete_entry_label_date.grid(row=i, columnspan=4, column=5, sticky="nsew", padx=5, pady=5)
 
-        delete_entry_button = tk.Button(saved_entries, bg="red", fg="black", font="Helvitica 14", text="X", command=lambda y=diary_entry["title"]: delete_entry(delete_entry_page, y))
+        delete_entry_button = tk.Button(saved_entries, bg="black", fg="red", font="Helvitica 14", text="X", command=lambda y=diary_entry["title"]: delete_entry(delete_entry_page, y))
         delete_entry_button.grid(row=i, column=9, sticky="nsew", padx=5, pady=5) # button to delete entries instead of a textbox and submit button - will be subject to further development
 
 def delete_entry(delete_entry_page, y): # deletes a saved entry once a title is written in the textbox and the submit button is pressed, then should refresh the entries
@@ -587,7 +587,7 @@ def delete_entry(delete_entry_page, y): # deletes a saved entry once a title is 
 def display_audio_entries(audio_saved_entries, audio_entry_selected): # displays the audio entries as buttons in the "audio saved entries" frame
 
     for i, audio_entry in enumerate(os.listdir(audio_entries_folder_directory), start=1):
-        audio_entry_button = tk.Button(audio_saved_entries, bg="black", fg="orange", font="Helvitica 14", text=f"{i}. {audio_entry}", command=lambda e = audio_entry: load_audio_entry(audio_entry_selected, e)) # similar lambda function as the saved text entries page
+        audio_entry_button = tk.Button(audio_saved_entries, bg="grey", fg="maroon", font="Helvitica 14", text=f"{i}. {audio_entry}", command=lambda e = audio_entry: load_audio_entry(audio_entry_selected, e)) # similar lambda function as the saved text entries page
         audio_entry_button.grid(row=i-1, columnspan=1, column=0, sticky="nsew", padx=5, pady=5)
 
 def load_audio_entry(audio_entry_selected, e): # loads the title of the audio entry into the entry box, allowing us to then call that specific entry using the play_audio_entry() function
@@ -696,7 +696,7 @@ def record_audio_entry(enter_filename_entry, enter_time_entry, timer_label): # a
 
 def main(): # Page 1 - Home Page
 
-    window.title("Honeycomb Text Diary - Home")
+    window.title("Mystery Text Diary - Home")
 
     # Grid Configuration
 
