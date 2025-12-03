@@ -48,6 +48,12 @@ Unlike the leap from GUI-V1 to GUI-V2, I was able to copy my work for GUI-V2 dir
 
 The delete functionality is now also simply a button press, although the button is much smaller than that of the "view entries" buttons, but nonetheless it's made the process of deleting entries significantly less clunky. I've also added "Exit" buttons to every page of the program, allowing the user to seamlessly exit the program from any page.
 
-I've also started to incorporate other forms of multimedia with this version, with an "Audio Entries" page where .mp3 files stored in an "Audio Entries" folder can be played in an audio interface built using Tkinter and Pygame. This was the main goal of V3.
+I've also started to incorporate other forms of multimedia with this version, with an "Audio Entries" page where .mp3 files stored in an "Audio Entries" folder can be played in an audio interface built using Tkinter and Pygame, which includes the ability to load an audio entry by pressing the button of the entry you wish to play, which is then placed in an audio interface including play, stop, pause and unpause buttons as well as volume buttons. There is also a page dedicated to adding audio entries, allowing the user to either open the Audio Entries folder and drag and drop a pre-made .mp3 audio file in, or to record an entry using an in-built recording system in the app. As of V3, this is still yet to be refined somewhat.
 
-### -- An "Add Audio Entry" page is also currently being worked on for GUI-v3 -- ###
+I would say that overall "Honeycomb" is a little less of a leap than what was made from V1 to V2, but nonetheless the inclusion of audio entries as well as refinements to the text entry pages make it a good improvment nonetheless.
+
+Prototype 6 - ProtoDiaryGUI-V4 "Mystery"
+
+The fourth GUI prototype (well, essentially version at this point) will set the goal of bringing image and video entries to the Python Personal Diary app. The theme is "Mystery" - red/maroon, black and grey tones set the mood of a retro adventure horror.
+
+# --- This prototype is currently under construction --- #
