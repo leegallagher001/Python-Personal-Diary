@@ -1,8 +1,8 @@
-# ProtoDiaryGUI-V3 - by Lee Gallagher
+# ProtoDiaryGUI-V4 - by Lee Gallagher
 
-# A continuation building upon the work done in GUI-V2, the idea for V3 will be to experiment with the next ideas, making
-# the "delete entry" functions more buttons-based (similar to the "read entry" function) as well as some experiments with
-# adding other types of media such as audio excerpts
+# The next stage, building upon the work done in GUI-V3, my goals for V4 will be the addition of the other
+# forms of media. I was very happy with how smoothly the addition of Audio was for V3, however for V4 I want
+# to take it to the next level, incorporating Images and Video Entries
 
 # (0) Imports
 
@@ -30,6 +30,8 @@ import asyncio
 diary_entries_file = "pdgui-v4-entries.json"
 
 audio_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V4\Audio Entries" # path to the "audio entries" folder - 'r' at beginning treats the path like a raw string
+image_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V4\Image Entries" # as above but for image entries
+video_entries_folder_directory = r"C:\Users\User\Desktop\Personal Diary Project (Python)\ProtoDiaryGUI-V4\Video Entries" # as above but for video entries
 
 window = tk.Tk()
 window.geometry("1000x600")
@@ -232,7 +234,7 @@ def help_readme():
 
     # Content
 
-    read_me = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nNew Entry\n\nOption 1 - The 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen as buttons. Simply click on the entry you wish to view. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply type in the name of the entry to delete, and hit 'Submit'. A message will appear to let you know that the entry has been deleted. Leave the page, and when you come back it should be gone.\n\nOption 4 - Audio Entries\n\nPage Under Construction."
+    read_me = "HELP & README\n\nWelcome to the Python Text Diary Program!.\n\nThis program is designed to let users store their favourite memories in a text diary format - holidays, days away, funny stories, anything you like really - but to do that it is important to have an idea of how the program works of course.\n\nAs you will have seen, the home page consists of the main menu. Here you have four options:\n\nOption 1 - New Entry\n\nThe 'New Entry' page allows the user to enter new text diary entries. Simply fill in the fields and hit 'Submit'. The entry will be saved and can be read later on.\n\nOption 2 - View Saved Entries\n\nThis page allows the user to select and read a saved entry. A list of current entries will be displayed on the screen as buttons. Simply click on the entry you wish to view. A new page will then appear with the entry available to read there.\n\nOption 3 - Delete Entry\n\nSometimes you might find that you want to delete an entry, whether to save space or simply because it may not be fond to you anymore. On this page, the titles of each entry will once again be displayed. Simply click the cross at the right-hand side of the entry you wish to delete and it is as easy as that!.\n\nOption 4 - Audio Entries\n\nThe audio entries page includes a catalogue of your audio diary entries as well as an audio interface to play them.\n\nOption 5 - Add Audio Entries\n\nThis page allows you to add your audio entries, either by dragging and dropping an existing audio entry file (.mp3) or by recording a new entry with the app's built-in recording function.\n\nOption 6 - Image Entries\n\nUnder Construction.\n\nOption 7 - Video Entries\n\nUnder Construction."
 
     help_readme_text = tk.Text(help_readme_page, bg="grey", fg="maroon", font="Helvitica 18", width=52, height=12, wrap="word") # help/readme displayed here
     help_readme_text.grid(row=1, rowspan=7, column=0, columnspan=10, padx=5, pady=5, sticky="nsew")
@@ -469,6 +471,97 @@ def add_audio_entry(): # Page 8 - Add Audio Entry Page
     # Pack Audio Entries Page
 
     add_audio_entry_page.pack(fill='both', expand=True)
+
+def image_entries(): # Page 9 - Image Entries
+
+    window.title("Mystery Text Diary - Image Entries")
+
+    # Grid Configuration
+
+    image_entries_page = tk.Frame(window, bg="maroon")
+
+    pg9rows = 10
+    pg9columns = 10
+
+    for i in range(pg9rows):
+        image_entries_page.grid_rowconfigure(i, weight=1)
+    for i in range(pg9columns):
+        image_entries_page.grid_columnconfigure(i, weight=1)
+
+    # Header
+
+    header = tk.Label(image_entries_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
+    header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Content
+
+    gallery_back_btn = tk.Button(image_entries_page, bg="maroon", fg="white", font="Helvitica 24", text="<")
+    gallery_back_btn.grid(row=1, column=0, rowspan=6, padx=10, pady=5, sticky="nsew")
+
+    gallery_fwd_btn = tk.Button(image_entries_page, bg="maroon", fg="white", font="Helvitica 24", text=">")
+    gallery_fwd_btn.grid(row=1, column=9, rowspan=6, padx=10, pady=5, sticky="nsew")
+
+    img_description = tk.Text(image_entries_page, bg="grey", fg="maroon", font="Helvitica 14", height=2, width=30)
+    img_description.grid(row=7, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    home_button = tk.Button(image_entries_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(image_entries_page)) # home button
+    home_button.grid(row=8, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
+
+    add_image_btn = tk.Button(image_entries_page, bg="white", fg="black", font="Helvitica 20", text="Add Image Entries", command=lambda:filedialog.askopenfilename(initialdir=image_entries_folder_directory, filetypes=[("Image Files", "*.jpg *.png")]))
+    add_image_btn.grid(row=8, column=3, columnspan=4, padx=10, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(image_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
+
+    # Footer
+
+    footer = tk.Label(image_entries_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Pack Image Entries Page
+
+    image_entries_page.pack(fill='both', expand=True)
+
+def video_entries(): # Page 10 - Video Entries
+
+    window.title("Mystery Text Diary - Video Entries")
+
+    # Grid Configuration
+
+    video_entries_page = tk.Frame(window, bg="maroon")
+
+    pg10rows = 10
+    pg10columns = 10
+
+    for i in range(pg10rows):
+        video_entries_page.grid_rowconfigure(i, weight=1)
+    for i in range(pg10columns):
+        video_entries_page.grid_columnconfigure(i, weight=1)
+
+    # Header
+
+    header = tk.Label(video_entries_page, bg="black", fg="red", font="Helvitica 40", text="mystery text diary")
+    header.grid(row=0, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Content
+
+    add_video_btn = tk.Button(video_entries_page, bg="white", fg="black", font="Helvitica 20", text="Add/Load Video Entries", command=lambda:filedialog.askopenfilename(initialdir=video_entries_folder_directory, filetypes=[("Video Files", "*.mp4")]))
+    add_video_btn.grid(row=7, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    home_button = tk.Button(video_entries_page, bg="black", fg="white", font="Helvitica 18", relief=tk.RAISED, bd=5, text="home", command=lambda: home(video_entries_page)) # home button
+    home_button.grid(row=8, column=0, columnspan=7, padx=5, pady=5, sticky="nsew")
+
+    exit_app = tk.Button(video_entries_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
+    exit_app.grid(row=8, column=7, columnspan=3, padx=10, pady=10, sticky="nsew")
+
+    # Footer
+
+    footer = tk.Label(video_entries_page, bg="black", fg="red", font="Helvitica 24", text="created by lee gallagher 2025")
+    footer.grid(row=9, column=0, columnspan=10, padx=10, pady=5, sticky="nsew")
+
+    # Pack Image Entries Page
+
+    video_entries_page.pack(fill='both', expand=True)
 
 # ---------- HOME PAGE BUTTON FUNCTION (TO VISIT OTHER PAGE) ---------- #
 
@@ -732,10 +825,10 @@ def main(): # Page 1 - Home Page
     audio_entries_page = tk.Button(home_page, bg="black", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="current audio entries", command=lambda: visit_page(home_page, audio_entries))
     audio_entries_page.grid(row=5, rowspan=4, column=0, columnspan=3, padx=10, pady=10, sticky="nsew") # the audio entries page is the big experiment of this version
 
-    image_entry_page = tk.Button(home_page, bg="black", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="image entries", command=lambda: visit_page(home_page, add_audio_entry))
+    image_entry_page = tk.Button(home_page, bg="black", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="image entries", command=lambda: visit_page(home_page, image_entries))
     image_entry_page.grid(row=5, rowspan=4, column=3, columnspan=3, padx=10, pady=10, sticky="nsew")
 
-    video_entry_page = tk.Button(home_page, bg="black", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="video entries", command=lambda: visit_page(home_page, add_audio_entry))
+    video_entry_page = tk.Button(home_page, bg="black", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="video entries", command=lambda: visit_page(home_page, video_entries))
     video_entry_page.grid(row=5, rowspan=4, column=6, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     exit_app = tk.Button(home_page, bg="red", fg="white", font="Helvitica 16", relief=tk.RAISED, bd=5, text="EXIT", command=exit_button)
